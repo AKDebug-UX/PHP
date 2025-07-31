@@ -1,7 +1,7 @@
 <?php
 $numbers = [];
 
-for ($i = 1; $i <= 4; $i++) {
+for ($i = 1; $i <= 5; $i++) {
     $input = (int)readline("Enter number $i: ");
     $numbers[] = $input;
 }

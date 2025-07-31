@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+    
+        .links {
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+    
+        .links a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+            padding: 6px 12px;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+    
+        .links a:hover {
+            background-color: #007BFF;
+            color: white;
+        }
+    
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+            color: #222;
+        }
+    
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            margin-top: 20px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+    
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+            vertical-align: middle;
+        }
+    
+        th {
+            background-color: #007BFF;
+            color: white;
+            font-weight: bold;
+        }
+    
+        td[rowspan] {
+            background-color: #f9f9f9;
+            color: #555;
+            font-style: italic;
+        }
+    
+        td:not([rowspan]) {
+            font-weight: 500;
+        }
+    
+        hr {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+    
+        @media screen and (max-width: 768px) {
+            table {
+                font-size: 12px;
+            }
+    
+            .links {
+                flex-direction: column;
+                align-items: center;
+            }
+    
+            .links a {
+                margin-bottom: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- List of courses with their title that showcase UL, OL and DL as the case may be -->
+    <div class="list">
+        <ul>
+            <li>CSC202 - Data Structures and Algorithms</li>
+            <li>CSC204 - Introduction to Numerical Analysis</li>
+            <li>CSC206 - Human Computer Interaction</li>
+            <li>CSC208 - Web Application Development</li>
+            <li>CSC210 - Information and Computer Ethics</li>
+            <li>CSC212 - Operations Reasearch</li>
+            <li>GST114 - Philosophy and Human Existence</li>
+            <li>GST116 - Introduction to Entrepreneurial Skill</li>
+            <li>MAT202 - Elementary Differential Equations I</li>
+            <li>MAT204 - Linear Algebra II</li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <div class="links">
+        <a href="page_one.html">PAGE ONE</a>
+        <a href="page_two.html">PAGE TWO</a>
+        <a href="page_three.html">PAGE THREE</a>
+        <a href="page_four.html">PAGE FOUR</a>
+    </div>
+
+    <hr>
+
+    <h2>200 Level Course Timetable</h2>
+    <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Day / Time</th>
+                <th>8:00 AM - 10:00 AM</th>
+                <th>9:00 AM - 11:00 AM</th>
+                <th>9:00 AM - 10:00 AM</th>
+                <th>10:00 AM - 12:00 PM</th>
+                <th>11:00 AM - 1:00 PM</th>
+                <th>12:00 PM - 2:00 PM</th>
+                <th>1:00 PM - 2:00 PM</th>
+                <th>2:00 PM - 4:00 PM</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Monday</td>
+                <td rowspan="3" style="background:#f9f9f9;">Lecture Free</td>
+                <td rowspan="6" style="background:#f9f9f9;">Lecture Free</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+                <td>CSC212<br>Operations Research</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+                <td>CSC212<br>Operations Research</td>
+            </tr>
+            <tr>
+                <td>Tuesday</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+                <td>CSC204<br>Introduction to Numerical Analysis</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+            </tr>
+            <tr>
+                <td>Wednesday</td>
+                <td>GST114<br>Philosophy and Human Existence</td>
+                <td>CSC206<br>Human Computer Interaction</td>
+                <td>MAT202<br>Elementary Differential Equations I</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+                <td>GST116<br>Introduction to Entrepreneurial Skill</td>
+            </tr>
+            <tr>
+                <td>Thursday</td>
+                <td>CSC208<br>Web Application Development</td>
+                <td>CSC202<br>Data Structures and Algorithms</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+            </tr>
+            <tr>
+                <td>Friday</td>
+                <td>MAT204<br>Linear Algebra II</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+                <td>CSC210<br>Information and Computer Ethics</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+                <td rowspan="2" style="background:#f9f9f9;">Lecture Free</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>
