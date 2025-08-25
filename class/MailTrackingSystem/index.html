@@ -11,19 +11,103 @@
 
 <body>
     <!-- Landing Page -->
-    <div id="landing-page" class="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4 py-12">
-        <div class="mx-auto max-w-3xl text-center">
-            <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-                Welcome to Ekiti State University Mail Tracking System
-            </h1>
-            <p class="mt-6 text-lg leading-8 text-gray-600">
-                Efficiently track and manage all your university mail with ease. Get real-time updates on mail status,
-                sender,
-                recipient, and more.
-            </p>
-            <div class="mt-10 flex items-center justify-center gap-x-6">
-                <button class="btn btn-primary mr-3" onclick="showLoginPage()">Get Started</button>
-                <button class="btn btn-outline">Learn More</button>
+    <div id="landing-page" class="flex flex-col items-center justify-center bg-gradient">
+        <!-- Hero Section -->
+        <div class="hero-section min-h-screen flex items-center justify-center px-4 py-12">
+            <div class="hero-container">
+                <div class="hero-content mx-auto max-w-4xl text-center">
+                    <div class="hero-badge">New & Improved</div>
+                    <h1 class="hero-title text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
+                        Streamline Mail Management at <span class="text-highlight">Ekiti State University</span>
+                    </h1>
+                    <p class="hero-subtitle mt-6 text-xl leading-8 text-gray-100">
+                        Track, manage, and analyze university mail with our powerful system. Get real-time updates and never lose track of important documents again.
+                    </p>
+                    <div class="mt-10 flex items-center justify-center gap-x-6">
+                        <button class="btn btn-primary btn-glow mr-3" onclick="showLoginPage()">Get Started</button>
+                        <button class="btn btn-outline btn-outline-light">Learn More</button>
+                    </div>
+                    <div class="hero-stats mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="stat-highlight">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Mail Tracking Accuracy</div>
+                        </div>
+                        <div class="stat-highlight">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Real-time Updates</div>
+                        </div>
+                        <div class="stat-highlight">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Departments Connected</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Features Section -->
+        <div class="features-section py-20 px-4 w-full">
+            <div class="container mx-auto max-w-6xl">
+                <div class="section-header text-center mb-16">
+                    <h2 class="section-title text-white text-3xl md:text-4xl font-bold mb-4">Powerful Features</h2>
+                    <p class="section-subtitle text-gray-100 text-lg max-w-3xl mx-auto">Our mail tracking system offers a comprehensive set of features designed to streamline your mail management process.</p>
+                </div>
+                
+                <div class="features-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3 class="feature-title">Real-time Tracking</h3>
+                        <p class="feature-description">Track mail in real-time with detailed status updates and location information.</p>
+                    </div>
+                    
+                    <!-- Feature 2 -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h3 class="feature-title">Instant Notifications</h3>
+                        <p class="feature-description">Receive instant alerts when mail status changes or reaches its destination.</p>
+                    </div>
+                    
+                    <!-- Feature 3 -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="feature-title">Advanced Analytics</h3>
+                        <p class="feature-description">Gain insights with comprehensive reports and analytics on mail flow.</p>
+                    </div>
+                    
+                    <!-- Feature 4 -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Mobile Access</h3>
+                        <p class="feature-description">Access the system from any device with our responsive design.</p>
+                    </div>
+                    
+                    <!-- Feature 5 -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Secure System</h3>
+                        <p class="feature-description">Enterprise-grade security to protect sensitive mail information.</p>
+                    </div>
+                    
+                    <!-- Feature 6 -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="feature-title">User Management</h3>
+                        <p class="feature-description">Assign roles and permissions to control access to mail data.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
