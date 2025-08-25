@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Professorial Assessment System</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <a href="dashboard.html" class="nav-brand">Assessment System</a>
+                <ul class="nav-menu">
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="assessments.html">Assessments</a></li>
+                    <li><a href="professors.html">Professors</a></li>
+                    <li><a href="criteria.html">Criteria</a></li>
+                    <li><a href="users.html">Users</a></li>
+                    <li><a href="reports.html">Reports</a></li>
+                    <li><a href="#" onclick="logout()">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container dashboard">
+        <div class="dashboard-header">
+            <h1>Assessment Reports</h1>
+            <div>
+                <button onclick="generateReport()" class="btn btn-primary">Generate New Report</button>
+                <button onclick="exportReport()" class="btn btn-secondary">Export to PDF</button>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px; margin-bottom: 30px;">
+            <div class="table-container">
+                <h3 style="padding: 15px; margin: 0; background-color: #f8f9fa; border-bottom: 1px solid #eee;">Assessment Score Distribution</h3>
+                <div style="padding: 20px;">
+                    <canvas id="scoreChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <h3 style="padding: 15px; margin: 0; background-color: #f8f9fa; border-bottom: 1px solid #eee;">Department Performance</h3>
+                <div style="padding: 20px;">
+                    <canvas id="departmentChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h2 style="padding: 20px; margin: 0; background-color: #f8f9fa; border-bottom: 1px solid #eee;">Professor Performance Summary</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Professor</th>
+                        <th>Department</th>
+                        <th>Teaching Score</th>
+                        <th>Research Score</th>
+                        <th>Service Score</th>
+                        <th>Overall Score</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dr. John Smith</td>
+                        <td>Computer Science</td>
+                        <td>85.0</td>
+                        <td>92.0</td>
+                        <td>78.0</td>
+                        <td>87.5</td>
+                        <td><span class="badge badge-completed">Excellent</span></td>
+                        <td><a href="professor_report.html?id=1" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">View Details</a></td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Emily Johnson</td>
+                        <td>Chemistry</td>
+                        <td>90.0</td>
+                        <td>95.0</td>
+                        <td>89.0</td>
+                        <td>92.3</td>
+                        <td><span class="badge badge-completed">Outstanding</span></td>
+                        <td><a href="professor_report.html?id=4" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">View Details</a></td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Sarah Wilson</td>
+                        <td>Mathematics</td>
+                        <td>88.0</td>
+                        <td>85.0</td>
+                        <td>82.0</td>
+                        <td>85.7</td>
+                        <td><span class="badge badge-submitted">Good</span></td>
+                        <td><a href="professor_report.html?id=2" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">View Details</a></td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Michael Davis</td>
+                        <td>Physics</td>
+                        <td>82.0</td>
+                        <td>88.0</td>
+                        <td>75.0</td>
+                        <td>83.2</td>
+                        <td><span class="badge badge-submitted">Good</span></td>
+                        <td><a href="professor_report.html?id=3" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">View Details</a></td>
+                    </tr>
+                    <tr>
+                        <td>Dr. James Brown</td>
+                        <td>Biology</td>
+                        <td>79.0</td>
+                        <td>81.0</td>
+                        <td>77.0</td>
+                        <td>79.5</td>
+                        <td><span class="badge badge-draft">Satisfactory</span></td>
+                        <td><a href="professor_report.html?id=5" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">View Details</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-container" style="margin-top: 30px;">
+            <h2 style="padding: 20px; margin: 0; background-color: #f8f9fa; border-bottom: 1px solid #eee;">Key Performance Indicators</h2>
+            <div style="padding: 30px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                    <div class="stat-card">
+                        <div class="stat-number">87.2</div>
+                        <div class="stat-label">Average Overall Score</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">85.4</div>
+                        <div class="stat-label">Average Teaching Score</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">88.2</div>
+                        <div class="stat-label">Average Research Score</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">80.2</div>
+                        <div class="stat-label">Average Service Score</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/reports.js"></script>
+</body>
+</html>

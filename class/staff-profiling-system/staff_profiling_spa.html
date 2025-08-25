@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EKSU STAFF PROFILING</title>
+  <link rel="stylesheet" href="staff_profiling_spa (1).css">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .nav-link.active {
+      color: #667eea;
+      font-weight: bold;
+      border-bottom: 2px solid #667eea;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo" onclick="showPage('home')">EKSU STAFF PROFILING</a>
+      <ul class="nav-menu" id="nav-menu">
+        <!-- Site pages (hidden until login) -->
+        <li class="nav-item site-link" style="display:none;">
+          <a href="#" class="nav-link active" id="nav-home" onclick="showPage('home')">Home</a>
+        </li>
+        <li class="nav-item site-link" style="display:none;">
+          <a href="#" class="nav-link" id="nav-profile-form" onclick="showPage('profile-form')">Staff Registration</a>
+        </li>
+        <li class="nav-item site-link" style="display:none;">
+          <a href="#" class="nav-link" id="nav-profile-display" onclick="showPage('profile-display')">Profile
+            Preview</a>
+        </li>
+
+        <!-- Auth links -->
+        <li class="nav-item auth-link" id="signup-link">
+          <a href="#" class="nav-link" onclick="showPage('signup')">Sign Up</a>
+        </li>
+        <li class="nav-item auth-link" id="login-link">
+          <a href="#" class="nav-link" onclick="showPage('login')">Login</a>
+        </li>
+        <li class="nav-item auth-link" id="logout-link" style="display:none;">
+          <a href="#" class="nav-link" onclick="logout()">Logout</a>
+        </li>
+      </ul>
+      <div class="mobile-menu" onclick="toggleMobileMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- Sign Up Page (Default Active) -->
+    <div id="signup" class="page active">
+      <div class="form-container">
+        <h2 style="text-align:center; color:#667eea; margin-bottom:20px;">Create an Account</h2>
+        <form id="signupForm">
+          <div class="form-group">
+            <label for="signupName" class="required">Full Name</label>
+            <input type="text" id="signupName" required>
+          </div>
+          <div class="form-group">
+            <label for="signupEmail" class="required">Email</label>
+            <input type="email" id="signupEmail" required>
+          </div>
+          <div class="form-group">
+            <label for="signupPassword" class="required">Password</label>
+            <input type="password" id="signupPassword" required>
+          </div>
+          <div style="text-align:center; margin-top:20px;">
+            <button type="submit" class="btn">Sign Up</button>
+          </div>
+          <p style="text-align:center; margin-top:15px;">
+            Already have an account? <a href="#" onclick="showPage('login')">Login</a>
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login" class="page">
+      <div class="form-container">
+        <h2 style="text-align:center; color:#667eea; margin-bottom:20px;">Login</h2>
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginEmail" class="required">Email</label>
+            <input type="email" id="loginEmail" required>
+          </div>
+          <div class="form-group">
+            <label for="loginPassword" class="required">Password</label>
+            <input type="password" id="loginPassword" required>
+          </div>
+          <div style="text-align:center; margin-top:20px;">
+            <button type="submit" class="btn">Login</button>
+          </div>
+          <p style="text-align:center; margin-top:15px;">
+            Don’t have an account? <a href="#" onclick="showPage('signup')">Sign Up</a>
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Home Page -->
+    <div id="home" class="page">
+      <section class="hero">
+        <h1>EKSU STAFF PROFILING</h1>
+        <p>Create and manage comprehensive digital staff profiles</p>
+        <div class="hero-buttons">
+          <a href="#" class="btn" onclick="showPage('profile-form')">Create Profile</a>
+          <a href="#" class="btn btn-outline" onclick="showPage('profile-display')">Profile Preview</a>
+        </div>
+      </section>
+      <section class="features">
+        <div class="feature-card"><span class="feature-icon">👤</span>
+          <h3>Professional Profiles</h3>
+          <p>Create comprehensive staff profiles showcasing expertise, qualifications, and achievements.</p>
+        </div>
+        <div class="feature-card"><span class="feature-icon">🔍</span>
+          <h3>Easy Discovery</h3>
+          <p>Search and filter staff by department, expertise, position, and specialization.</p>
+        </div>
+        <div class="feature-card"><span class="feature-icon">📊</span>
+          <h3>Skills Tracking</h3>
+          <p>Track staff skills with proficiency levels and competency mapping.</p>
+        </div>
+        <div class="feature-card"><span class="feature-icon">🎓</span>
+          <h3>Academic Excellence</h3>
+          <p>Showcase qualifications, research areas, and contributions.</p>
+        </div>
+        <div class="feature-card"><span class="feature-icon">🌐</span>
+          <h3>Social Integration</h3>
+          <p>Connect professional profiles with social media and networks.</p>
+        </div>
+        <div class="feature-card"><span class="feature-icon">📱</span>
+          <h3>Mobile Friendly</h3>
+          <p>Responsive design for viewing on any device.</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- Registration Form -->
+    <!-- Registration Form -->
+    <div id="profile-form" class="page">
+      <div class="form-container">
+        <h2 style="text-align:center; color:#667eea; margin-bottom:20px;">Staff Profile Registration</h2>
+        <form id="staffForm">
+          <label>Name *</label>
+          <input type="text" id="name" required>
+
+          <label>Personal Statement</label>
+          <textarea id="bio" rows="3"></textarea>
+
+          <label>Specialization *</label>
+          <textarea id="specialization" required></textarea>
+
+          <label>Leadership Position Held</label>
+          <select id="leadership">
+            <option value="">-- Select Position --</option>
+            <option>VC</option>
+            <option>DVC</option>
+            <option>Dean</option>
+            <option>Sub-Dean</option>
+            <option>Faculty Officer</option>
+            <option>Director</option>
+            <option>HOD</option>
+            <option>Librarian</option>
+            <option>Registrar</option>
+            <option>Student President</option>
+          </select>
+
+          <label>Status *</label>
+          <select id="status" required>
+            <option>Academic – Fulltime/Main</option>
+            <option>Academic – Parttime/Adjunct</option>
+            <option>Non-academic - Administrative</option>
+            <option>Non-academic – Technical/Laboratory</option>
+            <option>Non-academic – Adhoc/temporarily</option>
+            <option>Student President</option>
+          </select>
+
+          <label>Welcome Address</label>
+          <textarea id="welcome" rows="3"></textarea>
+
+          <label>Department *</label>
+          <input type="text" id="department" required>
+
+          <label>Staff Code / Student ID</label>
+          <input type="text" id="staffCode">
+
+          <label>Professional Skills</label>
+          <select id="skills" multiple>
+            <option>Problem Solving</option>
+            <option>Collaboration</option>
+            <option>Work Ethics</option>
+            <option>Critical Thinking</option>
+            <option>Design Thinking</option>
+            <option>Adaptability</option>
+            <option>Management</option>
+          </select>
+
+          <label>Qualification</label>
+          <textarea id="qualification" rows="2"></textarea>
+
+          <label>Hobbies</label>
+          <select id="hobbies" multiple>
+            <option>Gaming</option>
+            <option>Writing</option>
+            <option>Traveling</option>
+            <option>Sketching</option>
+          </select>
+
+          <label>Favorite Working Group</label>
+          <textarea id="fav-group"></textarea>
+
+          <label>Favorite Research Group</label>
+          <textarea id="fav-research"></textarea>
+
+          <label>Best Life Experience</label>
+          <textarea id="life-experience"></textarea>
+
+          <label>Upload Smiling Photo *</label>
+          <input type="file" id="photo" accept="image/*" required>
+
+          <label>Phone *</label>
+          <input type="tel" id="phone" pattern="^\+?[0-9\- ]{7,20}$" required>
+
+          <label>Email *</label>
+          <input type="email" id="email" required>
+
+          <label>Facebook</label>
+          <input type="text" id="facebook">
+
+          <label>Twitter</label>
+          <input type="text" id="twitter">
+
+          <label>Instagram</label>
+          <input type="text" id="instagram">
+
+          <label>YouTube</label>
+          <input type="text" id="youtube">
+
+          <div style="text-align:center; margin-top:20px;">
+            <button type="submit" class="btn">Preview Profile</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Profile Display -->
+    <div id="profile-display" class="page" style="display:none;">
+      <div class="profile-page" id="profileContent"
+        style="max-width:800px; margin:auto; background:#fff; padding:30px; border-radius:10px; box-shadow:0 0 8px rgba(0,0,0,0.1);">
+        <!-- Content will be injected here -->
+      </div>
+      <div id="downloadBtnContainer" style="text-align:center; margin-top:20px;">
+        <button class="btn" onclick="downloadPDF()">Download PDF</button>
+      </div>
+    </div>
+    <!-- Footer Section -->
+    <footer>
+      <div class="footer-container">
+        <div class="footer-about">
+          <h3>About Us</h3>
+          <p>We provide an easy way for staff to create, manage, and download professional profiles all in one place.
+          </p>
+        </div>
+        <div class="footer-subscribe">
+          <h3>Subscribe</h3>
+          <form id="subscribeForm">
+            <input type="email" id="subscribeEmail" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+        <div class="footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="#" onclick="showPage('home')">Home</a></li>
+            <li><a href="#" onclick="showPage('profile-display')">Profile</a></li>
+            <li><a href="#" onclick="showPage('signup')">Sign Up</a></li>
+            <li><a href="#" onclick="showPage('login')">Login</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer-bottom">© 2025 Staff Profiling App. All rights reserved.</p>
+    </footer>
+
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+
+    <script src="./staff_profiling_spa (1).js"></script>
+
+
+
+
+    <!-- Animation -->
+    <script>
+      const featureCards = document.querySelectorAll('.feature-card');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.2 });
+      featureCards.forEach(card => observer.observe(card));
+    </script>

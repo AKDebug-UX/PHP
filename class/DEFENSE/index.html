@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EKSU Job Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="flex min-h-screen bg-gray-100">
+
+  <!-- Sidebar -->
+  <aside class="w-72 bg-green-900 text-white flex flex-col p-5 space-y-4">
+    <div>
+      <h1 class="text-2xl font-extrabold">EKSU JOBBER MAN</h1>
+      <p class="text-xs text-green-200">Official EKSU Recruitment Portal</p>
+    </div>
+    <nav class="flex-1 space-y-2">
+      <button onclick="showPage('home')" class="w-full text-left p-2 hover:bg-green-800/70 rounded">🏠 Home</button>
+      <button onclick="showPage('dashboard')" class="w-full text-left p-2 hover:bg-green-800/70 rounded">📊 Applicant Dashboard</button>
+      <button onclick="showPage('admin')" class="w-full text-left p-2 hover:bg-green-800/70 rounded">🔒 Admin Panel</button>
+      <button onclick="showPage('contact')" class="w-full text-left p-2 hover:bg-green-800/70 rounded">✉️ Contact Us</button>
+    </nav>
+    <footer class="text-xs text-green-200 mt-auto">© 2025 EKSU JOBBER MAN<br><br>
+      <p class="text-xs text-green-200">Designed by Waliyullah Nusaybah Ajoke. A 200 level student of EKSU, From the faculty of Education; 
+        Computer Science and Education as option </p></footer>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 overflow-y-auto p-6 space-y-6">
+    <!-- Home -->
+    <section id="home" class="space-y-6">
+      <div class="bg-white p-6 rounded-2xl shadow">
+        <h2 class="text-3xl font-bold">Welcome to EKSU Jobber Man</h2>
+        <p class="text-gray-700 mt-2 max-w-3xl"><b>Apply online for available EKSU jobs.</p></b><br><br>
+          Welcome to the Ekiti State University Job Portal!
+
+          Discover exciting career opportunities with Ekiti State University. Whether you are seeking 
+          an academic role to inspire and educate, or a non-academic position to support our mission, 
+          this portal is your gateway to join a vibrant and dynamic community.<br><br>
+          
+          Explore current openings, learn about the requirements, and apply seamlessly. At Ekiti State 
+          University, your talents and passion find a place to grow, contribute, and make a lasting impact.<br><br>
+
+        Ekiti State University is committed to fostering an environment where talent, 
+        dedication, and innovation thrive. Our staff—both academic and non-academic—play a 
+        pivotal role in shaping the future of education, research, and community development. 
+        By joining our team, you become part of a vibrant community dedicated to learning, 
+        growth, and service.<br><br>
+
+        We believe that every great institution is built by people with passion and purpose. Whether you are an 
+        experienced professional or just starting your career journey, Ekiti State University welcomes your ambition, 
+        energy, and expertise. Together, we can shape the future of knowledge, innovation, and service to society.<br><br>
+
+        Take your time to explore, learn about our institution, and apply for positions that align with your skills and 
+        aspirations. Your journey toward a meaningful and impactful career starts here.<br><br>
+
+         </div>
+    
+      </div>
+
+      <div class="bg-gradient-to-r from-green-200 via-blue-200 to-purple-200 p-6 rounded-2xl shadow">
+        <h3 class="text-xl font-semibold mb-3">Available Jobs</h3>
+        <div id="jobsList" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"></div>
+      </div>
+    </section>
+
+    <!-- Applicant Dashboard -->
+    <section id="dashboard" class="hidden">
+      <div id="applicantAuth" class="bg-white p-6 rounded-2xl shadow"></div>
+      <div id="applicantArea" class="hidden space-y-6">
+        <div class="bg-white p-6 rounded-2xl shadow space-y-3">
+          <h3 class="text-xl font-bold">Profile</h3>
+          <div id="profileView" class="space-y-1"></div>
+          <button class="px-4 py-2 bg-green-700 text-white rounded" onclick="openEditProfile()">Edit Profile</button>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow space-y-3">
+          <h3 class="text-xl font-bold">My Application</h3>
+          <div id="myApplication"></div>
+        </div>
+        <div><button class="px-4 py-2 bg-red-600 text-white rounded" onclick="logoutApplicant()">Logout</button></div>
+      </div>
+    </section>
+
+    <!-- Admin Panel -->
+    <section id="admin" class="hidden space-y-6">
+      <div id="adminAuth" class="bg-white p-6 rounded-2xl shadow"></div>
+      <div id="adminArea" class="hidden space-y-6">
+        <div class="bg-white p-6 rounded-2xl shadow flex items-center justify-between">
+          <h3 class="text-xl font-bold">Admin Dashboard</h3>
+          <div class="flex gap-2">
+            <button class="px-3 py-2 bg-red-600 text-white rounded" onclick="adminLogout()">Logout</button>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow space-y-3">
+          <h3 class="text-xl font-bold">Manage Jobs</h3>
+          <form id="jobForm" class="flex flex-col sm:flex-row gap-2">
+            <input type="text" id="jobTitle" placeholder="Job Title" class="border px-3 py-2 rounded w-full sm:w-auto"/>
+            <input type="text" id="jobType" placeholder="Type (Academic/Non-Academic)" class="border px-3 py-2 rounded w-full sm:w-auto"/>
+            <input type="text" id="jobSalary" placeholder="Salary" class="border px-3 py-2 rounded w-full sm:w-auto"/>
+            <input type="text" id="jobDesc" placeholder="Description" class="border px-3 py-2 rounded w-full sm:w-auto"/>
+            <button type="submit" class="px-4 py-2 bg-green-700 text-white rounded">Add Job</button>
+          </form>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow space-y-3">
+          <h3 class="text-xl font-bold">Applicants Summary</h3>
+          <div>Total Applicants: <span id="totalApplicants">0</span></div>
+          <div id="applicantsSummary"></div>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl shadow space-y-3">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm border rounded">
+              <thead class="bg-gray-100">
+                <tr>
+                  <th class="p-2">Name</th>
+                  <th class="p-2">Email</th>
+                  <th class="p-2">Education</th>
+                  <th class="p-2">Job</th>
+                  <th class="p-2">Status</th>
+                  <th class="p-2">Action</th>
+                </tr>
+              </thead>
+              <tbody id="applicantsTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Us -->
+    <section id="contact" class="hidden">
+      <div class="bg-white p-6 rounded-2xl shadow space-y-2">
+        <h2 class="text-2xl font-bold">Contact Us</h2>
+        <p>Email: <a class="text-blue-700 underline" href="mailto:hr@eksu.edu.ng">hr@eksu.edu.ng</a></p>
+        <p>Phone: +234 903 367 7617, +234 904 064 2617</p>
+        <p>Address: HR Department, Ekiti State University (EKSU), Ado-Ekiti, Nigeria.</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // LocalStorage helper
+    const LS = {
+      get: (k,d)=>JSON.parse(localStorage.getItem(k)||JSON.stringify(d)),
+      set: (k,v)=>localStorage.setItem(k,JSON.stringify(v))
+    };
+    if(!LS.get('jobs')) LS.set('jobs',[]);
+    if(!LS.get('applicants')) LS.set('applicants',[]);
+    
+    // Show page
+    function showPage(id){
+      document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+      if(id==='home') renderJobs();
+      if(id==='admin') renderAdmin();
+      if(id==='dashboard') renderApplicantDashboard();
+    }
+
+    // Jobs
+      // Function to render jobs
+      // Function to render jobs
+function renderJobs() {
+  const list = document.getElementById('jobsList');
+  const jobs = JSON.parse(localStorage.getItem('jobs')) || [];
+  const isAdmin = localStorage.getItem('adminLogged'); // ✅ check if admin is logged in
+
+  list.innerHTML = jobs.map((j, i) => `
+    <div class="bg-white p-4 rounded-xl shadow hover:shadow-lg transition relative">
+      <h4 class="font-bold text-green-900">${j.title}</h4>
+      <p class="text-sm text-gray-600">${j.type} · ${j.salary}</p>
+      <p class="mt-2 text-gray-700 text-sm">${j.description}</p>
+      ${isAdmin ? `
+        <div class="absolute top-2 right-2 flex gap-2">
+          <button class="text-blue-600 font-bold" onclick="editJob(${i})">✏️</button>
+          <button class="text-red-600 font-bold" onclick="deleteJob(${i})">🗑️</button>
+        </div>
+      ` : ''}
+    </div>
+  `).join('');
+}
+
+      // Function to delete job (restricted to admin only)
+      function deleteJob(index) {
+      const isAdmin = localStorage.getItem('adminLogged'); // check if admin is logged in
+      if (!isAdmin) {
+      alert("Only admin can delete jobs!");
+      return;
+     }
+
+      let jobs = JSON.parse(localStorage.getItem('jobs')) || [];
+      jobs.splice(index, 1); // remove one job at position index
+      localStorage.setItem('jobs', JSON.stringify(jobs));
+      renderJobs(); // refresh job list
+      }
+
+      // Run on page load
+      document.addEventListener('DOMContentLoaded', renderJobs);
+    
+    
+    
+  
+
+    // Admin
+    function renderAdmin(){
+      const area = document.getElementById('adminArea');
+      area.classList.remove('hidden');
+      updateApplicantsTable();
+      updateApplicantsSummary();
+    }
+
+    document.getElementById('jobForm').onsubmit = e=>{
+      e.preventDefault();
+      const jobs = LS.get('jobs',[]);
+      const title = document.getElementById('jobTitle').value.trim();
+      if(!title) return alert('Enter Job Title');
+      jobs.push({
+        title,
+        type: document.getElementById('jobType').value,
+        salary: document.getElementById('jobSalary').value,
+        description: document.getElementById('jobDesc').value
+      });
+      LS.set('jobs',jobs);
+      renderJobs();
+      document.getElementById('jobForm').reset();
+    }
+
+    const ADMIN_USER = {email:'admin@eksu.ng', password:'admin123'};
+
+    // Applicants Table
+    function updateApplicantsTable(){
+      const tbl = document.getElementById('applicantsTable');
+      const apps = LS.get('applicants',[]);
+      tbl.innerHTML = apps.map((a,i)=>`
+        <tr class="border-t">
+          <td class="p-2">${a.name}</td>
+          <td class="p-2">${a.email}</td>
+          <td class="p-2">${a.education}</td>
+          <td class="p-2">${a.jobTitle}</td>
+          <td class="p-2">${a.status || 'Pending'}</td>
+          <td class="p-2 space-x-1">
+            <button class="px-2 py-1 bg-yellow-400 rounded" onclick="updateStatus(${i},'Shortlisted')">Shortlist</button>
+            <button class="px-2 py-1 bg-green-600 text-white rounded" onclick="updateStatus(${i},'Hired')">Hire</button>
+            <button class="px-2 py-1 bg-red-600 text-white rounded" onclick="updateStatus(${i},'Rejected')">Reject</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+    function updateStatus(idx,status){
+      const apps = LS.get('applicants',[]);
+      apps[idx].status = status;
+      LS.set('applicants',apps);
+      updateApplicantsTable();
+      updateApplicantsSummary();
+    }
+
+    function updateApplicantsSummary(){
+      const summary = document.getElementById('applicantsSummary');
+      const apps = LS.get('applicants',[]);
+      const byJob = {};
+      apps.forEach(a=> byJob[a.jobTitle] = (byJob[a.jobTitle]||0)+1);
+      summary.innerHTML = Object.entries(byJob).map(([j,n])=>`<div>${j}: ${n} applicants</div>`).join('');
+      document.getElementById('totalApplicants').innerText = apps.length;
+    }
+
+    // Admin Login
+    function renderAdminLogin(){
+      document.getElementById('adminAuth').innerHTML = `
+        <div class="space-y-3">
+          <input type="email" id="adminEmail" placeholder="Admin Email" class="border px-3 py-2 rounded w-full"/>
+          <input type="password" id="adminPass" placeholder="Password" class="border px-3 py-2 rounded w-full"/>
+          <button class="px-4 py-2 bg-green-700 text-white rounded" onclick="adminLogin()">Login</button>
+        </div>
+      `;
+    }
+    function adminLogin(){
+      const email = document.getElementById('adminEmail').value;
+      const pass = document.getElementById('adminPass').value;
+      const ADMIN_USER = {email:'admin@eksu.ng', password:'admin123'};
+      if(email===ADMIN_USER.email && pass===ADMIN_USER.password){
+        localStorage.setItem('adminLogged',true);
+        renderAdmin();
+      }else alert('Wrong credentials');
+    }
+    function adminLogout(){
+      localStorage.removeItem('adminLogged');
+      renderAdminLogin();
+      document.getElementById('adminArea').classList.add('hidden');
+    }
+    renderAdminLogin();
+
+    // Applicant Dashboard
+    function renderApplicantDashboard(){
+      const authDiv = document.getElementById('applicantAuth');
+      const areaDiv = document.getElementById('applicantArea');
+      const logged = localStorage.getItem('applicantLogged');
+      if(!logged){
+        areaDiv.classList.add('hidden');
+        authDiv.innerHTML = `
+          <h3 class="text-lg font-bold mb-2">Applicant Login / Register</h3>
+          <div class="space-y-2">
+            <input type="text" id="apName" placeholder="Full Name" class="border px-3 py-2 rounded w-full"/>
+            <input type="email" id="apEmail" placeholder="Email" class="border px-3 py-2 rounded w-full"/>
+            <input type="text" id="apEducation" placeholder="Education" class="border px-3 py-2 rounded w-full"/>
+            <select id="apJob" class="border px-3 py-2 rounded w-full"></select>
+            <input type="file" id="apCV" class="border px-3 py-2 rounded w-full"/>
+            <button class="px-4 py-2 bg-green-700 text-white rounded" onclick="registerApplicant()">Apply</button>
+          </div>
+        `;
+        const jobSelect = document.getElementById('apJob');
+        jobSelect.innerHTML = LS.get('jobs',[]).map(j=>`<option value="${j.title}">${j.title}</option>`).join('');
+      } else {
+        areaDiv.classList.remove('hidden');
+        authDiv.classList.add('hidden');
+        showProfile();
+        showMyApplication();
+      }
+    }
+
+    function registerApplicant(){
+      const name = document.getElementById('apName').value.trim();
+      const email = document.getElementById('apEmail').value.trim();
+      const education = document.getElementById('apEducation').value.trim();
+      const jobTitle = document.getElementById('apJob').value;
+      const cv = document.getElementById('apCV').files[0]?.name || 'No file';
+      if(!name||!email) return alert('Fill Name and Email');
+      const apps = LS.get('applicants',[]);
+      apps.push({name,email,education,jobTitle,cv,status:'Pending',createdAt: new Date()});
+      LS.set('applicants',apps);
+      localStorage.setItem('applicantLogged',email);
+      renderApplicantDashboard();
+    }
+
+    function showProfile(){
+      const email = localStorage.getItem('applicantLogged');
+      const apps = LS.get('applicants',[]);
+      const a = apps.find(x=>x.email===email);
+      const div = document.getElementById('profileView');
+      div.innerHTML = `
+        <div>Name: ${a.name}</div>
+        <div>Email: ${a.email}</div>
+        <div>Education: ${a.education}</div>
+        <div>Job Applied: ${a.jobTitle}</div>
+        <div>CV: ${a.cv}</div>
+      `;
+    }
+
+    function showMyApplication(){
+      const email = localStorage.getItem('applicantLogged');
+      const apps = LS.get('applicants',[]);
+      const a = apps.find(x=>x.email===email);
+      const div = document.getElementById('myApplication');
+      if(!a) div.innerHTML = 'No application yet.';
+      else div.innerHTML = `Status: ${a.status} <br> Applied At: ${new Date(a.createdAt).toLocaleString()}`;
+    }
+
+    function logoutApplicant(){
+      localStorage.removeItem('applicantLogged');
+      renderApplicantDashboard();
+    }
+  </script>
+</body>
+</html>

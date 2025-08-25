@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Assessment - Professorial Assessment System</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <a href="dashboard.html" class="nav-brand">Assessment System</a>
+                <ul class="nav-menu">
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="assessments.html">Assessments</a></li>
+                    <li><a href="professors.html">Professors</a></li>
+                    <li><a href="criteria.html">Criteria</a></li>
+                    <li><a href="users.html">Users</a></li>
+                    <li><a href="reports.html">Reports</a></li>
+                    <li><a href="#" onclick="logout()">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container dashboard">
+        <div class="dashboard-header">
+            <h1>Create New Assessment</h1>
+            <div>
+                <a href="assessments.html" class="btn btn-secondary">Back to Assessments</a>
+            </div>
+        </div>
+
+        <div id="error-message" class="alert alert-error" style="display: none;"></div>
+        <div id="success-message" class="alert alert-success" style="display: none;"></div>
+
+        <div class="assessment-form">
+            <h2>Assessment Details</h2>
+            <form id="createAssessmentForm">
+                <div class="form-group">
+                    <label for="professor_id">Professor:</label>
+                    <select id="professor_id" name="professor_id" class="form-control" required>
+                        <option value="">Select Professor</option>
+                        <option value="1">Dr. John Smith - Computer Science</option>
+                        <option value="2">Dr. Sarah Wilson - Mathematics</option>
+                        <option value="3">Dr. Michael Davis - Physics</option>
+                        <option value="4">Dr. Emily Johnson - Chemistry</option>
+                        <option value="5">Dr. James Brown - Biology</option>
+                        <option value="6">Dr. Lisa Anderson - Psychology</option>
+                        <option value="7">Dr. Robert Wilson - History</option>
+                        <option value="8">Dr. Susan Davis - English</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="assessment_period">Assessment Period:</label>
+                    <input type="text" id="assessment_period" name="assessment_period" class="form-control" 
+                           placeholder="e.g., Fall 2024, Academic Year 2023-2024" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="comments">Initial Comments (Optional):</label>
+                    <textarea id="comments" name="comments" class="form-control" rows="4" 
+                              placeholder="Any initial notes or comments about this assessment..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Create Assessment</button>
+                    <a href="assessments.html" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/assessment_create.js"></script>
+</body>
+</html>

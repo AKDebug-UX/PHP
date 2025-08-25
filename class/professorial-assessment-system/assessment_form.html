@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment Form - Professorial Assessment System</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <a href="dashboard.html" class="nav-brand">Assessment System</a>
+                <ul class="nav-menu">
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="assessments.html">Assessments</a></li>
+                    <li><a href="professors.html">Professors</a></li>
+                    <li><a href="criteria.html">Criteria</a></li>
+                    <li><a href="users.html">Users</a></li>
+                    <li><a href="reports.html">Reports</a></li>
+                    <li><a href="#" onclick="logout()">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container dashboard">
+        <div class="dashboard-header">
+            <h1>Assessment Form</h1>
+            <div>
+                <strong>Professor:</strong> <span id="professor-name">Dr. John Smith</span><br>
+                <strong>Department:</strong> <span id="professor-department">Computer Science</span><br>
+                <strong>Period:</strong> <span id="assessment-period">Fall 2024</span><br>
+                <strong>Status:</strong> <span class="badge badge-draft" id="assessment-status">Draft</span>
+            </div>
+        </div>
+
+        <div id="error-message" class="alert alert-error" style="display: none;"></div>
+        <div id="success-message" class="alert alert-success" style="display: none;"></div>
+
+        <form id="assessmentForm" class="assessment-form">
+            <!-- Teaching Criteria -->
+            <div class="criteria-section">
+                <h3>Teaching</h3>
+                
+                <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 5px;">
+                    <div class="score-input">
+                        <label for="score_1">Course Delivery:</label>
+                        <input type="number" id="score_1" name="score_1" min="0" max="100" step="0.01" class="form-control" style="width: 100px;">
+                        <span class="weight-info">(Max: 100, Weight: 3.0)</span>
+                    </div>
+                    <p style="margin: 10px 0; color: #666; font-size: 0.9rem;">Effectiveness in delivering course content</p>
+                    <div class="form-group">
+                        <label for="comments_1">Comments:</label>
+                        <textarea id="comments_1" name="comments_1" class="form-control" rows="2" placeholder="Optional comments for this criterion..."></textarea>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 5px;">
+                    <div class="score-input">
+                        <label for="score_2">Student Engagement:</label>
+                        <input type="number" id="score_2" name="score_2" min="0" max="100" step="0.01" class="form-control" style="width: 100px;">
+                        <span class="weight-info">(Max: 100, Weight: 2.5)</span>
+                    </div>
+                    <p style="margin: 10px 0; color: #666; font-size: 0.9rem;">Ability to engage and motivate students</p>
+                    <div class="form-group">
+                        <label for="comments_2">Comments:</label>
+                        <textarea id="comments_2" name="comments_2" class="form-control" rows="2" placeholder="Optional comments for this criterion..."></textarea>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 5px;">
+                    <div class="score-input">
+                        <label for="score_3">Assessment Methods:</label>
+                        <input type="number" id="score_3" name="score_3" min="0" max="100" step="0.01" class="form-control" style="width: 100px;">
+                        <span class="weight-info">(Max: 100, Weight: 2.0)</span>
+                    </div>
+                    <p style="margin: 10px 0; color: #666; font-size: 0.9rem;">Quality of student assessment methods</p>
+                    <div class="form-group">
+                        <label for="comments_3">Comments:</label>
+                        <textarea id="comments_3" name="comments_3" class="form-control" rows="2" placeholder="Optional comments for this criterion..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Research Criteria -->
+            <div class="criteria-section">
+                <h3>Research</h3>
+                
+                <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 5px;">
+                    <div class="score-input">
+                        <label for="score_4">Publications:</label>
+                        <input type="number" id="score_4" name="score_4" min="0" max="100" step="0.01" class="form-control" style="width: 100px;">
+                        <span class="weight-info">(Max: 100, Weight: 4.0)</span>
+                    </div>
+                    <p style="margin: 10px 0; color: #666; font-size: 0.9rem;">Quality and quantity of research publications</p>
+                    <div class="form-group">
+                        <label for="comments_4">Comments:</label>
+                        <textarea id="comments_4" name="comments_4" class="form-control" rows="2" placeholder="Optional comments for this criterion..."></textarea>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 5px;">
+                    <div class="score-input">
+                        <label for="score_5">Grants:</label>
+                        <input type="number" id="score_5" name="score_5" min="0" max="100" step="0.01" class="form-control" style="width: 100px;">
+                        <span class="weight-info">(Max: 100, Weight: 3.5)</span>
+                    </div>
+                    <p style="margin: 10px 0; color: #666; font-size: 0.9rem;">Success in obtaining research funding</p>
+                    <div class="form-group">
+                        <label for="comments_5">Comments:</label>
+                        <textarea id="comments_5" name="comments_5" class="form-control" rows="2" placeholder="Optional comments for this criterion..."></textarea>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 5px;">
+                    <div class="score-input">
+                        <label for="score_6">Innovation:</label>
+                        <input type="number" id="score_6" name="score_6" min="0" max="100" step="0.01" class="form-control" style="width: 100px;">
+                        <span class="weight-info">(Max: 100, Weight: 3.0)</span>
+                    </div>
+                    <p style="margin: 10px 0; color: #666; font-size: 0.9rem;">Innovation and impact of research work</p>
+                    <div class="form-group">
+                        <label for="comments_6">Comments:</label>
+                        <textarea id="comments_6" name="comments_6" class="form-control" rows="2" placeholder="Optional comments for this criterion..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Criteria -->
+            <div class="criteria-section">
+                <h3>Service</h3>
+                
+                <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 5px;">
+                    <div class="score-input">
+                        <label for="score_7">Committee Work:</label>
+                        <input type="number" id="score_7" name="score_7" min="0" max="100" step="0.01" class="form-control" style="width: 100px;">
+                        <span class="weight-info">(Max: 100, Weight: 2.0)</span>
+                    </div>
+                    <p style="margin: 10px 0; color: #666; font-size: 0.9rem;">Participation in university committees</p>
+                    <div class="form-group">
+                        <label for="comments_7">Comments:</label>
+                        <textarea id="comments_7" name="comments_7" class="form-control" rows="2" placeholder="Optional comments for this criterion..."></textarea>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 5px;">
+                    <div class="score-input">
+                        <label for="score_8">Community Service:</label>
+                        <input type="number" id="score_8" name="score_8" min="0" max="100" step="0.01" class="form-control" style="width: 100px;">
+                        <span class="weight-info">(Max: 100, Weight: 1.5)</span>
+                    </div>
+                    <p style="margin: 10px 0; color: #666; font-size: 0.9rem;">Contribution to academic community</p>
+                    <div class="form-group">
+                        <label for="comments_8">Comments:</label>
+                        <textarea id="comments_8" name="comments_8" class="form-control" rows="2" placeholder="Optional comments for this criterion..."></textarea>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #eee; border-radius: 5px;">
+                    <div class="score-input">
+                        <label for="score_9">Mentoring:</label>
+                        <input type="number" id="score_9" name="score_9" min="0" max="100" step="0.01" class="form-control" style="width: 100px;">
+                        <span class="weight-info">(Max: 100, Weight: 2.0)</span>
+                    </div>
+                    <p style="margin: 10px 0; color: #666; font-size: 0.9rem;">Quality of student and colleague mentoring</p>
+                    <div class="form-group">
+                        <label for="comments_9">Comments:</label>
+                        <textarea id="comments_9" name="comments_9" class="form-control" rows="2" placeholder="Optional comments for this criterion..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="criteria-section">
+                <h3>Overall Comments</h3>
+                <div class="form-group">
+                    <label for="overall_comments">General Assessment Comments:</label>
+                    <textarea id="overall_comments" name="overall_comments" class="form-control" rows="5" 
+                              placeholder="Overall assessment comments, strengths, areas for improvement, recommendations..."></textarea>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                <button type="button" onclick="saveAsDraft()" class="btn btn-secondary">Save as Draft</button>
+                <button type="button" onclick="submitAssessment()" class="btn btn-success">Submit Assessment</button>
+                <a href="assessments.html" class="btn btn-primary">Back to Assessments</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="assets/js/assessment_form.js"></script>
+</body>
+</html>

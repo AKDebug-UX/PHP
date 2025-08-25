@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Professorial Assessment System</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <a href="dashboard.html" class="nav-brand">Assessment System</a>
+                <ul class="nav-menu">
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="assessments.html">Assessments</a></li>
+                    <li><a href="professors.html">Professors</a></li>
+                    <li><a href="criteria.html">Criteria</a></li>
+                    <li><a href="users.html">Users</a></li>
+                    <li><a href="reports.html">Reports</a></li>
+                    <li><a href="#" onclick="logout()">Logout (<span id="current-user">User</span>)</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container dashboard">
+        <div class="dashboard-header">
+            <h1>Welcome, <span id="user-name">User</span></h1>
+            <p>Role: <span id="user-role">Admin</span></p>
+        </div>
+
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-number" id="total-professors">15</div>
+                <div class="stat-label">Total Professors</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="total-assessments">42</div>
+                <div class="stat-label">Total Assessments</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="completed-assessments">28</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="pending-assessments">14</div>
+                <div class="stat-label">Pending</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h2 style="padding: 20px; margin: 0; background-color: #f8f9fa; border-bottom: 1px solid #eee;">Recent Assessments</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Professor</th>
+                        <th>Evaluator</th>
+                        <th>Period</th>
+                        <th>Status</th>
+                        <th>Score</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="recent-assessments">
+                    <tr>
+                        <td>Dr. John Smith</td>
+                        <td>Prof. Mary Johnson</td>
+                        <td>Fall 2024</td>
+                        <td><span class="badge badge-completed">Completed</span></td>
+                        <td>87.5</td>
+                        <td>Dec 15, 2024</td>
+                        <td><a href="assessment_view.html?id=1" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Sarah Wilson</td>
+                        <td>Prof. David Brown</td>
+                        <td>Fall 2024</td>
+                        <td><span class="badge badge-submitted">Submitted</span></td>
+                        <td>N/A</td>
+                        <td>Dec 14, 2024</td>
+                        <td><a href="assessment_view.html?id=2" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Michael Davis</td>
+                        <td>Prof. Lisa Anderson</td>
+                        <td>Fall 2024</td>
+                        <td><span class="badge badge-draft">Draft</span></td>
+                        <td>N/A</td>
+                        <td>Dec 13, 2024</td>
+                        <td>
+                            <a href="assessment_view.html?id=3" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">View</a>
+                            <a href="assessment_form.html?id=3" class="btn btn-success" style="padding: 5px 10px; font-size: 0.8rem;">Edit</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px;">
+            <div class="feature-card">
+                <h3>Create Assessment</h3>
+                <p>Start a new professor assessment process.</p>
+                <a href="assessment_create.html" class="btn btn-primary">Create New</a>
+            </div>
+            
+            <div class="feature-card">
+                <h3>View Reports</h3>
+                <p>Generate and view assessment reports.</p>
+                <a href="reports.html" class="btn btn-primary">View Reports</a>
+            </div>
+            
+            <div class="feature-card">
+                <h3>Manage Criteria</h3>
+                <p>Configure assessment criteria and weights.</p>
+                <a href="criteria.html" class="btn btn-primary">Manage</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

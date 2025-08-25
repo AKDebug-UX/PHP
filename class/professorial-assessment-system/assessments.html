@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessments - Professorial Assessment System</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-container">
+                <a href="dashboard.html" class="nav-brand">Assessment System</a>
+                <ul class="nav-menu">
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                    <li><a href="assessments.html">Assessments</a></li>
+                    <li><a href="professors.html">Professors</a></li>
+                    <li><a href="criteria.html">Criteria</a></li>
+                    <li><a href="users.html">Users</a></li>
+                    <li><a href="reports.html">Reports</a></li>
+                    <li><a href="#" onclick="logout()">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container dashboard">
+        <div class="dashboard-header">
+            <h1>Assessment Management</h1>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <a href="assessment_create.html" class="btn btn-primary">Create New Assessment</a>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <h2 style="padding: 20px; margin: 0; background-color: #f8f9fa; border-bottom: 1px solid #eee;">All Assessments</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Professor</th>
+                        <th>Department</th>
+                        <th>Evaluator</th>
+                        <th>Period</th>
+                        <th>Status</th>
+                        <th>Score</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="assessments-table">
+                    <tr>
+                        <td>Dr. John Smith</td>
+                        <td>Computer Science</td>
+                        <td>Prof. Mary Johnson</td>
+                        <td>Fall 2024</td>
+                        <td><span class="badge badge-completed">Completed</span></td>
+                        <td>87.50</td>
+                        <td>Dec 15, 2024</td>
+                        <td>
+                            <div style="display: flex; gap: 5px;">
+                                <a href="assessment_view.html?id=1" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Sarah Wilson</td>
+                        <td>Mathematics</td>
+                        <td>Prof. David Brown</td>
+                        <td>Fall 2024</td>
+                        <td><span class="badge badge-submitted">Submitted</span></td>
+                        <td>N/A</td>
+                        <td>Dec 14, 2024</td>
+                        <td>
+                            <div style="display: flex; gap: 5px;">
+                                <a href="assessment_view.html?id=2" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Michael Davis</td>
+                        <td>Physics</td>
+                        <td>Prof. Lisa Anderson</td>
+                        <td>Fall 2024</td>
+                        <td><span class="badge badge-draft">Draft</span></td>
+                        <td>N/A</td>
+                        <td>Dec 13, 2024</td>
+                        <td>
+                            <div style="display: flex; gap: 5px;">
+                                <a href="assessment_view.html?id=3" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">View</a>
+                                <a href="assessment_form.html?id=3" class="btn btn-success" style="padding: 5px 10px; font-size: 0.8rem;">Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Emily Johnson</td>
+                        <td>Chemistry</td>
+                        <td>Prof. Robert Wilson</td>
+                        <td>Fall 2024</td>
+                        <td><span class="badge badge-completed">Completed</span></td>
+                        <td>92.30</td>
+                        <td>Dec 12, 2024</td>
+                        <td>
+                            <div style="display: flex; gap: 5px;">
+                                <a href="assessment_view.html?id=4" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">View</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Dr. James Brown</td>
+                        <td>Biology</td>
+                        <td>Prof. Susan Davis</td>
+                        <td>Fall 2024</td>
+                        <td><span class="badge badge-draft">Draft</span></td>
+                        <td>N/A</td>
+                        <td>Dec 11, 2024</td>
+                        <td>
+                            <div style="display: flex; gap: 5px;">
+                                <a href="assessment_view.html?id=5" class="btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">View</a>
+                                <a href="assessment_form.html?id=5" class="btn btn-success" style="padding: 5px 10px; font-size: 0.8rem;">Edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="assets/js/assessments.js"></script>
+</body>
+</html>
