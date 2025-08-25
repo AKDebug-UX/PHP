@@ -1,0 +1,207 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header */
+.header {
+  background: #000000;
+  color: white;
+  padding: 1rem 2rem;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.nav-links a {
+  margin-left: 1rem;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #ffcc70;
+}
+
+.btn-primary {
+  background: #ff7f50;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+.btn-secondary {
+  background: white;
+  color: #004aad;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+.btn-primary:hover {
+  background: #ff5f2e;
+}
+
+.btn-secondary:hover {
+  background: #ddd;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(to right, #004aad, #0073e6);
+  color: white;
+  padding: 4rem 2rem;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.hero-actions {
+  margin-top: 1.5rem;
+}
+
+.hero-actions .btn {
+  margin: 0 0.5rem;
+}
+
+/* Features Section */
+.features {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.feature-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-card i {
+  font-size: 2rem;
+  color: #004aad;
+  margin-bottom: 1rem;
+}
+
+/* How It Works */
+.how-it-works {
+  background: #f1f5ff;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.step {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 150px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.step i {
+  font-size: 1.8rem;
+  color: #ff7f50;
+  margin-bottom: 0.5rem;
+}
+
+/* Testimonials */
+.testimonials {
+  padding: 3rem 2rem;
+  text-align: center;
+  background: white;
+}
+
+.testimonial {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 0.5rem auto;
+  max-width: 500px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* CTA Section */
+.cta {
+  background: #004aad;
+  color: white;
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.cta .btn-primary {
+  background: #ff7f50;
+}
+
+.cta .btn-primary:hover {
+  background: #ff5f2e;
+}
+
+/* Footer */
+.footer {
+  background: #002b66;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .steps {
+    flex-direction: column;
+    align-items: center;
+  }
+}

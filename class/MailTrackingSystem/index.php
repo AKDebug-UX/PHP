@@ -196,14 +196,4 @@
             }
         }
 
-        // Filter mails via API
-        async function filterMails() {
-            const searchTerm = document.getElementById('search-input').value;
-            const statusFilter = document.getElementById('status-filter').value;
-            const priorityFilter = document.getElementById('priority-filter').value;
-
-            try {
-                let url = API_BASE_URL + 'search_mail.php?';
-                const params = new URLSearchParams();
-                
-                if (searchT
+   

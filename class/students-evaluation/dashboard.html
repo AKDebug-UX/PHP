@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Evaluation Dashboard - Ekiti State University</title>
+    <link rel="stylesheet" href="style/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>EKSU</span>
+                </div>
+                <h3>Course Evaluation</h3>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#overview" class="nav-item active" onclick="showSection('overview')">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#academic-info" class="nav-item" onclick="showSection('academic-info')">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Academic Info</span>
+                </a>
+                <a href="#course-selection" class="nav-item" onclick="showSection('course-selection')">
+                    <i class="fas fa-book"></i>
+                    <span>Course Selection</span>
+                </a>
+                <a href="#instructor" class="nav-item" onclick="showSection('instructor')">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Instructor</span>
+                </a>
+                <a href="#course-content" class="nav-item" onclick="showSection('course-content')">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Course Content</span>
+                </a>
+                <a href="#equipment" class="nav-item" onclick="showSection('equipment')">
+                    <i class="fas fa-laptop"></i>
+                    <span>Equipment</span>
+                </a>
+                <a href="#contact" class="nav-item" onclick="showSection('contact')">
+                    <i class="fas fa-address-card"></i>
+                    <span>Contact Info</span>
+                </a>
+                <a href="#" class="nav-item logout-item" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="progress-summary">
+                    <h4>Progress</h4>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="overallProgress"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">0% Complete</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>Student Course Evaluation</h1>
+                    <p>Ekiti State University - Department of Computer Science</p>
+                </div>
+                <div class="header-right">
+                    <div class="header-actions">
+                        <button class="btn btn-outline" onclick="previewForm()">
+                            <i class="fas fa-eye"></i>
+                            Preview
+                        </button>
+                        <button class="btn btn-primary" onclick="downloadPDF()">
+                            <i class="fas fa-download"></i>
+                            Download PDF
+                        </button>
+                        <button class="btn btn-success" onclick="sendEmail()">
+                            <i class="fas fa-envelope"></i>
+                            Send Email
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Overview Section -->
+                <section id="overview" class="content-section active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-tasks"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="completedSections">0</h3>
+                                <p>Sections Completed</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="overallRatingDisplay">0%</h3>
+                                <p>Overall Rating</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="selectedCourse">None</h3>
+                                <p>Selected Course</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="timeSpent">0 min</h3>
+                                <p>Time Spent</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="overview-cards">
+                        <div class="overview-card">
+                            <h3>Welcome to Course Evaluation</h3>
+                            <p>Please complete all sections to provide comprehensive feedback about your course
+                                experience.
+                                Your honest evaluation helps improve the quality of education.</p>
+                            <div class="quick-actions">
+                                <button class="btn btn-primary" onclick="showSection('academic-info')">
+                                    Start Evaluation
+                                </button>
+                            </div>
+                        </div>
+                        <div class="overview-card">
+                            <h3>Evaluation Guidelines</h3>
+                            <ul>
+                                <li>Select only one course to evaluate</li>
+                                <li>Rate each aspect from 1 (Poor) to 5 (Excellent)</li>
+                                <li>Provide detailed comments where applicable</li>
+                                <li>Contact information is optional</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Academic Info Section -->
+                <section id="academic-info" class="content-section">
+                    <div class="section-card">
+                        <div class="card-header">
+                            <h2>Academic Information</h2>
+                            <p>Select your faculty and department to view available courses</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="academic-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="faculty">
+                                            <i class="fas fa-university"></i>
+                                            Faculty
+                                        </label>
+                                        <select id="faculty" name="faculty" required onchange="updateDepartments()">
+                                            <option value="">Select Faculty</option>
+                                            <option value="Faculty of Science">Faculty of Science</option>
+                                            <option value="Faculty of Engineering">Faculty of Engineering</option>
+                                            <option value="Faculty of Arts">Faculty of Arts</option>
+                                            <option value="Faculty of Social Sciences">Faculty of Social Sciences
+                                            </option>
+                                            <option value="Faculty of Education">Faculty of Education</option>
+                                            <option value="Faculty of Law">Faculty of Law</option>
+                                            <option value="Faculty of Agriculture">Faculty of Agriculture</option>
+                                            <option value="Faculty of Medicine">Faculty of Medicine</option>
+                                        </select>
+                                        <div class="input-feedback"></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="department">
+                                            <i class="fas fa-building"></i>
+                                            Department
+                                        </label>
+                                        <select id="department" name="department" required onchange="updateCourses()">
+                                            <option value="">Select Department</option>
+                                        </select>
+                                        <div class="input-feedback"></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="level">
+                                        <i class="fas fa-layer-group"></i>
+                                        Level
+                                    </label>
+                                    <select id="level" name="level" required onchange="updateCourses()">
+                                        <option value="">Select Level</option>
+                                        <option value="100L">100L</option>
+                                        <option value="200L">200L</option>
+                                        <option value="300L">300L</option>
+                                        <option value="400L">400L</option>
+                                        <option value="500L">500L</option>
+                                    </select>
+                                    <div class="input-feedback"></div>
+                                </div>
+
+                                <div class="academic-summary">
+                                    <h3>Academic Summary</h3>
+                                    <div class="summary-grid">
+                                        <div class="summary-item">
+                                            <span class="label">Faculty:</span>
+                                            <span class="value" id="facultyDisplay">Not selected</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="label">Department:</span>
+                                            <span class="value" id="departmentDisplay">Not selected</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="label">Level:</span>
+                                            <span class="value" id="levelDisplay">Not selected</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="value" id="coursesCount">0 courses available</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Course Selection Section -->
+                <section id="course-selection" class="content-section">
+                    <div class="section-card">
+                        <div class="card-header">
+                            <h2>Course Selection</h2>
+                            <p>Choose the course you want to evaluate (select only one)</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="mb-4 session-info">
+                                <input type="text" id="session" placeholder="Session (e.g., 2023/2024)">
+                                <input type="date" id="evaluationDate">
+                            </div>
+
+                            <div class="course-grid" id="dynamicCourseGrid">
+                                <div class="course-placeholder">
+                                    <i class="fas fa-info-circle"></i>
+                                    <p>Please select your faculty, department, and level in the Academic Info section to
+                                        view available courses.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Instructor Assessment Section -->
+                <section id="instructor" class="content-section">
+                    <div class="section-card">
+                        <div class="card-header">
+                            <h2>Instructor Assessment</h2>
+                            <div class="rating-legend">
+                                <span>1 = Poor</span>
+                                <span>2 = Fair</span>
+                                <span>3 = Satisfactory</span>
+                                <span>4 = Good</span>
+                                <span>5 = Excellent</span>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="assessment-item">
+                                <div class="question">
+                                    <span class="question-number">a.</span>
+                                    <span class="question-text">The instructor was punctual and well organized for
+                                        classes.</span>
+                                </div>
+                                <div class="rating-group">
+                                    <input type="radio" id="inst_a_1" name="instructor_a" value="1">
+                                    <label for="inst_a_1">1</label>
+                                    <input type="radio" id="inst_a_2" name="instructor_a" value="2">
+                                    <label for="inst_a_2">2</label>
+                                    <input type="radio" id="inst_a_3" name="instructor_a" value="3">
+                                    <label for="inst_a_3">3</label>
+                                    <input type="radio" id="inst_a_4" name="instructor_a" value="4">
+                                    <label for="inst_a_4">4</label>
+                                    <input type="radio" id="inst_a_5" name="instructor_a" value="5">
+                                    <label for="inst_a_5">5</label>
+                                </div>
+                            </div>
+
+                            <div class="assessment-item">
+                                <div class="question">
+                                    <span class="question-number">b.</span>
+                                    <span class="question-text">The instructor was well-dressed and professional in
+                                        appearance.</span>
+                                </div>
+                                <div class="rating-group">
+                                    <input type="radio" id="inst_b_1" name="instructor_b" value="1">
+                                    <label for="inst_b_1">1</label>
+                                    <input type="radio" id="inst_b_2" name="instructor_b" value="2">
+                                    <label for="inst_b_2">2</label>
+                                    <input type="radio" id="inst_b_3" name="instructor_b" value="3">
+                                    <label for="inst_b_3">3</label>
+                                    <input type="radio" id="inst_b_4" name="instructor_b" value="4">
+                                    <label for="inst_b_4">4</label>
+                                    <input type="radio" id="inst_b_5" name="instructor_b" value="5">
+                                    <label for="inst_b_5">5</label>
+                                </div>
+                            </div>
+
+                            <div class="assessment-item">
+                                <div class="question">
+                                    <span class="question-number">c.</span>
+                                    <span class="question-text">The instructor demonstrated knowledge on the
+                                        subject.</span>
+                                </div>
+                                <div class="rating-group">
+                                    <input type="radio" id="inst_c_1" name="instructor_c" value="1">
+                                    <label for="inst_c_1">1</label>
+                                    <input type="radio" id="inst_c_2" name="instructor_c" value="2">
+                                    <label for="inst_c_2">2</label>
+                                    <input type="radio" id="inst_c_3" name="instructor_c" value="3">
+                                    <label for="inst_c_3">3</label>
+                                    <input type="radio" id="inst_c_4" name="instructor_c" value="4">
+                                    <label for="inst_c_4">4</label>
+                                    <input type="radio" id="inst_c_5" name="instructor_c" value="5">
+                                    <label for="inst_c_5">5</label>
+                                </div>
+                            </div>
+
+                            <div class="assessment-item">
+                                <div class="question">
+                                    <span class="question-number">d.</span>
+                                    <span class="question-text">The objectives, expectations, and grading policies were
+                                        clearly stated and consistently implemented.</span>
+                                </div>
+                                <div class="rating-group">
+                                    <input type="radio" id="inst_d_1" name="instructor_d" value="1">
+                                    <label for="inst_d_1">1</label>
+                                    <input type="radio" id="inst_d_2" name="instructor_d" value="2">
+                                    <label for="inst_d_2">2</label>
+                                    <input type="radio" id="inst_d_3" name="instructor_d" value="3">
+                                    <label for="inst_d_3">3</label>
+                                    <input type="radio" id="inst_d_4" name="instructor_d" value="4">
+                                    <label for="inst_d_4">4</label>
+                                    <input type="radio" id="inst_d_5" name="instructor_d" value="5">
+                                    <label for="inst_d_5">5</label>
+                                </div>
+                            </div>
+
+                            <div class="comment-section">
+                                <label>In what ways did the instructor engage students as active participants in the
+                                    learning process?</label>
+                                <textarea id="instructorComment" rows="4"
+                                    placeholder="Please provide your comments..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Course Content Assessment Section -->
+                <section id="course-content" class="content-section">
+                    <div class="section-card">
+                        <div class="card-header">
+                            <h2>Course Assessment</h2>
+                            <div class="rating-legend">
+                                <span>1 = Poor</span>
+                                <span>2 = Fair</span>
+                                <span>3 = Satisfactory</span>
+                                <span>4 = Good</span>
+                                <span>5 = Excellent</span>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="assessment-item">
+                                <div class="question">
+                                    <span class="question-number">a.</span>
+                                    <span class="question-text">The Course Manual provided was informative and easy to
+                                        follow.</span>
+                                </div>
+                                <div class="rating-group">
+                                    <input type="radio" id="course_a_1" name="course_a" value="1">
+                                    <label for="course_a_1">1</label>
+                                    <input type="radio" id="course_a_2" name="course_a" value="2">
+                                    <label for="course_a_2">2</label>
+                                    <input type="radio" id="course_a_3" name="course_a" value="3">
+                                    <label for="course_a_3">3</label>
+                                    <input type="radio" id="course_a_4" name="course_a" value="4">
+                                    <label for="course_a_4">4</label>
+                                    <input type="radio" id="course_a_5" name="course_a" value="5">
+                                    <label for="course_a_5">5</label>
+                                </div>
+                            </div>
+
+                            <div class="assessment-item">
+                                <div class="question">
+                                    <span class="question-number">b.</span>
+                                    <span class="question-text">My thinking about the topic was refined by the
+                                        course.</span>
+                                </div>
+                                <div class="rating-group">
+                                    <input type="radio" id="course_b_1" name="course_b" value="1">
+                                    <label for="course_b_1">1</label>
+                                    <input type="radio" id="course_b_2" name="course_b" value="2">
+                                    <label for="course_b_2">2</label>
+                                    <input type="radio" id="course_b_3" name="course_b" value="3">
+                                    <label for="course_b_3">3</label>
+                                    <input type="radio" id="course_b_4" name="course_b" value="4">
+                                    <label for="course_b_4">4</label>
+                                    <input type="radio" id="course_b_5" name="course_b" value="5">
+                                    <label for="course_b_5">5</label>
+                                </div>
+                            </div>
+
+                            <div class="assessment-item">
+                                <div class="question">
+                                    <span class="question-number">c.</span>
+                                    <span class="question-text">The instructor employed a variety of effective learning
+                                        formats:</span>
+                                </div>
+                                <div class="rating-group">
+                                    <input type="radio" id="course_c_1" name="course_c" value="1">
+                                    <label for="course_c_1">1</label>
+                                    <input type="radio" id="course_c_2" name="course_c" value="2">
+                                    <label for="course_c_2">2</label>
+                                    <input type="radio" id="course_c_3" name="course_c" value="3">
+                                    <label for="course_c_3">3</label>
+                                    <input type="radio" id="course_c_4" name="course_c" value="4">
+                                    <label for="course_c_4">4</label>
+                                    <input type="radio" id="course_c_5" name="course_c" value="5">
+                                    <label for="course_c_5">5</label>
+                                </div>
+                            </div>
+
+                            <div class="assessment-item">
+                                <div class="question">
+                                    <span class="question-number">d.</span>
+                                    <span class="question-text">The instructor was generally responsive to students'
+                                        needs.</span>
+                                </div>
+                                <div class="rating-group">
+                                    <input type="radio" id="course_d_1" name="course_d" value="1">
+                                    <label for="course_d_1">1</label>
+                                    <input type="radio" id="course_d_2" name="course_d" value="2">
+                                    <label for="course_d_2">2</label>
+                                    <input type="radio" id="course_d_3" name="course_d" value="3">
+                                    <label for="course_d_3">3</label>
+                                    <input type="radio" id="course_d_4" name="course_d" value="4">
+                                    <label for="course_d_4">4</label>
+                                    <input type="radio" id="course_d_5" name="course_d" value="5">
+                                    <label for="course_d_5">5</label>
+                                </div>
+                            </div>
+
+                            <div class="comment-section">
+                                <label>Comments about the Course:</label>
+                                <textarea id="courseComment" rows="4"
+                                    placeholder="Please provide your comments..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Equipment Assessment Section -->
+                <section id="equipment" class="content-section">
+                    <div class="section-card">
+                        <div class="card-header">
+                            <h2>Equipment Assessment</h2>
+                            <p class="subtitle">(If applicable)</p>
+                            <div class="rating-legend">
+                                <span>1 = Poor</span>
+                                <span>2 = Fair</span>
+                                <span>3 = Satisfactory</span>
+                                <span>4 = Good</span>
+                                <span>5 = Excellent</span>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="assessment-item">
+                                <div class="question">
+                                    <span class="question-number">a.</span>
+                                    <span class="question-text">There was sufficient equipment in the laboratory for
+                                        individual hands-on practice.</span>
+                                </div>
+                                <div class="rating-group">
+                                    <input type="radio" id="equip_a_1" name="equipment_a" value="1">
+                                    <label for="equip_a_1">1</label>
+                                    <input type="radio" id="equip_a_2" name="equipment_a" value="2">
+                                    <label for="equip_a_2">2</label>
+                                    <input type="radio" id="equip_a_3" name="equipment_a" value="3">
+                                    <label for="equip_a_3">3</label>
+                                    <input type="radio" id="equip_a_4" name="equipment_a" value="4">
+                                    <label for="equip_a_4">4</label>
+                                    <input type="radio" id="equip_a_5" name="equipment_a" value="5">
+                                    <label for="equip_a_5">5</label>
+                                </div>
+                            </div>
+
+                            <div class="assessment-item">
+                                <div class="question">
+                                    <span class="question-number">b.</span>
+                                    <span class="question-text">The work done with laboratory equipment are relevant to
+                                        the
+                                        course content.</span>
+                                </div>
+                                <div class="rating-group">
+                                    <input type="radio" id="equip_b_1" name="equipment_b" value="1">
+                                    <label for="equip_b_1">1</label>
+                                    <input type="radio" id="equip_b_2" name="equipment_b" value="2">
+                                    <label for="equip_b_2">2</label>
+                                    <input type="radio" id="equip_b_3" name="equipment_b" value="3">
+                                    <label for="equip_b_3">3</label>
+                                    <input type="radio" id="equip_b_4" name="equipment_b" value="4">
+                                    <label for="equip_b_4">4</label>
+                                    <input type="radio" id="equip_b_5" name="equipment_b" value="5">
+                                    <label for="equip_b_5">5</label>
+                                </div>
+                            </div>
+
+                            <div class="comment-section">
+                                <label>Comments about the equipment:</label>
+                                <textarea id="equipmentComment" rows="4"
+                                    placeholder="Please provide your comments..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contact Information Section -->
+                <section id="contact" class="content-section">
+                    <div class="section-card">
+                        <div class="card-header">
+                            <h2>Contact Information</h2>
+                            <p class="subtitle">Optional - Provide your contact details if you want to be contacted
+                                regarding additional courses or for more information</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="contact-grid">
+                                <div class="input-group">
+                                    <label for="studentEmail">Email Address</label>
+                                    <input type="email" id="studentEmail" placeholder="Enter your email address">
+                                </div>
+                                <div class="input-group">
+                                    <label for="studentPhone">Phone Number</label>
+                                    <input type="tel" id="studentPhone" placeholder="Enter your phone number">
+                                </div>
+                            </div>
+
+                            <div class="final-rating">
+                                <div class="rating-card">
+                                    <h3>Overall Rating</h3>
+                                    <div class="rating-display">
+                                        <span id="overallRatingPercent">0%</span>
+                                    </div>
+                                    <p>Based on your responses</p>
+                                </div>
+                            </div>
+
+                            <div class="footer-note">
+                                <p><strong>Important:</strong> Course evaluations give you the opportunity to express
+                                    views
+                                    about a course and the way it was taught. The faculty/departmental administration
+                                    tailors such responses towards ensuring that the quality of teaching is assured, and
+                                    so
+                                    it is important that you answer thoroughly and honestly.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- Preview Modal -->
+        <div id="previewModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Evaluation Preview</h3>
+                    <span class="close" onclick="closePreview()">&times;</span>
+                </div>
+                <div class="modal-body" id="previewContent">
+                    <!-- Preview content will be inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="closePreview()">Close</button>
+                    <button class="btn btn-primary" onclick="downloadPDF()">Download PDF</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Processing...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</body>
+
+</html>
