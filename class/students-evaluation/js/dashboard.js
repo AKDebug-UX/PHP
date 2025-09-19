@@ -208,20 +208,45 @@ document.addEventListener('DOMContentLoaded', function () {
   const hamburgerBtn = document.getElementById('hamburger-btn');
   const sidebar = document.getElementById('sidebar');
   const closeBtn = document.getElementById('close-btn');
+  const sidebarOverlay = document.getElementById('sidebar-overlay');
 
-  if (hamburgerBtn && sidebar && closeBtn) {
+  if (hamburgerBtn && sidebar && closeBtn && sidebarOverlay) {
     hamburgerBtn.addEventListener('click', function () {
       sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
     });
 
     closeBtn.addEventListener('click', function () {
       sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+      document.body.style.overflow = ''; // Restore scrolling
     });
 
-    // Optional: close sidebar when clicking outside
-    window.addEventListener('click', function (e) {
-      if (sidebar.classList.contains('active') && !sidebar.contains(e.target) && e.target !== hamburgerBtn) {
+    // Close sidebar when clicking overlay
+    sidebarOverlay.addEventListener('click', function () {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+      document.body.style.overflow = ''; // Restore scrolling
+    });
+
+    // Optional: close sidebar when clicking outside (for larger screens)
+    document.addEventListener('click', function (e) {
+      if (window.innerWidth <= 900 && sidebar.classList.contains('active') && 
+          !sidebar.contains(e.target) && e.target !== hamburgerBtn && 
+          !hamburgerBtn.contains(e.target)) {
         sidebar.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+      }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 900) {
+        sidebar.classList.remove('active');
+        sidebarOverlay.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
       }
     });
   }

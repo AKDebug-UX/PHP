@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduEvCu - Student Course Evaluation System</title>
+    <title>Student Course Evaluation System</title>
     <link rel="stylesheet" href="style/landing.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -14,14 +14,16 @@
         <nav class="navbar">
             <div class="nav-brand">
                 <i class="fas fa-graduation-cap"></i>
-                <h1>Eksu EduEvCu</h1>
+                <h1>Eksu SCES</h1>
             </div>
             <button class="hamburger" id="hamburger-btn" aria-label="Open menu">
                 <i class="fas fa-bars"></i>
             </button>
             <div class="nav-links" id="nav-links">
-                <a href="login.html" class="nav-link">Login</a>
-                <a href="register.html" class="nav-link btn-primary">Register</a>
+                <a href="dashboard.html" class="nav-link btn-dashboard">Dashboard</a>
+                <a href="#" class="nav-link btn-la">LA</a>
+                <a href="#" class="nav-link btn-sp">SP</a>
+                <a href="#" class="nav-link btn-sc">SC</a>
             </div>
         </nav>
         <!-- Mobile Sidebar -->
@@ -29,8 +31,10 @@
             <button class="close-btn" id="close-btn" aria-label="Close menu">
                 <i class="fas fa-times"></i>
             </button>
-            <a href="login.html" class="nav-link">Login</a>
-            <a href="register.html" class="nav-link btn-primary">Register</a>
+            <a href="dashboard.html" class="nav-link btn-dashboard">Dashboard</a>
+            <a href="#" class="nav-link btn-la">LA</a>
+            <a href="#" class="nav-link btn-sp">SP</a>
+            <a href="#" class="nav-link btn-sc">SC</a>
         </aside>
     </header>
 
@@ -41,8 +45,10 @@
                 <h1 class="hero-title">Transform Your Educational Experience</h1>
                 <p>EduEvCu empowers students to provide meaningful feedback and helps institutions improve quality.</p>
                 <div class="hero-actions">
-                    <a href="register.html" class="btn btn-primary">Get Started</a>
-                    <a href="login.html" class="btn btn-secondary">Login</a>
+                    <a href="dashboard.html" class="btn btn-dashboard">Dashboard</a>
+                    <a href="#" class="btn btn-la">Leave of Absent</a>
+                    <a href="#" class="btn btn-sp">Staff Profile</a>
+                    <a href="#" class="btn btn-sc">Student Clearance</a>
                 </div>
             </div>
         </section>
@@ -102,7 +108,12 @@
         <section class="cta">
             <div class="flex flex-col items-center justify-center gap-4">
                 <h2 class="text-3xl font-bold">Ready to Start?</h2>
-                <a href="register.html" class="btn btn-primary">Create Account</a>
+                <div class="cta-buttons">
+                    <a href="dashboard.html" class="btn btn-dashboard">Dashboard</a>
+                    <a href="#" class="btn btn-la">Leave of Absent</a>
+                    <a href="#" class="btn btn-sp">Staff Profile</a>
+                    <a href="#" class="btn btn-sc">Student Clearance</a>
+                </div>
             </div>
         </section>
     </main>

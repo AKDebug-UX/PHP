@@ -14,7 +14,7 @@ body {
 
 /* Header */
 .header {
-  background: #000000;
+  background: #7B113A;
   color: white;
   padding: 1rem 2rem;
 }
@@ -42,7 +42,7 @@ body {
 }
 
 .nav-links a:hover {
-  color: #ffcc70;
+  color: #8FD6E1;
 }
 
 
@@ -96,24 +96,78 @@ body {
 }
 
 .btn-primary {
-  background: #ff7f50;
+  background: #7B113A;
   padding: 0.5rem 1rem;
   border-radius: 5px;
 }
 
 .btn-secondary {
   background: white;
-  color: #004aad;
+  color: #7B113A;
   padding: 0.5rem 1rem;
   border-radius: 5px;
 }
 
+/* New button styles with specified color scheme */
+.btn-dashboard {
+  background: #1597BB;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
+
+.btn-la {
+  background: #7B113A;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
+
+.btn-sp {
+  background: #150E56;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
+
+.btn-sc {
+  background: #1597BB;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
+
+.btn-dashboard:hover {
+  background: #8FD6E1;
+  color: #1597BB;
+}
+
+.btn-la:hover {
+  background: #8FD6E1;
+  color: #7B113A;
+}
+
+.btn-sp:hover {
+  background: #8FD6E1;
+  color: #150E56;
+}
+
+.btn-sc:hover {
+  background: #8FD6E1;
+  color: #1597BB;
+}
+
 .btn-primary:hover {
-  background: #ff5f2e;
+  background: #150E56;
 }
 
 .btn-secondary:hover {
-  background: #ddd;
+  background: #8FD6E1;
+  color: #7B113A;
 }
 
 /* Hero Section */
@@ -122,7 +176,7 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: linear-gradient(to right, #004aad, #0073e6);
+  background: linear-gradient(to right, #7B113A, #150E56);
   color: white;
   padding: 4rem 2rem;
 }
@@ -134,10 +188,14 @@ body {
 
 .hero-actions {
   margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .hero-actions .btn {
-  margin: 0 0.5rem;
+  margin: 0;
 }
 
 /* Features Section */
@@ -167,13 +225,13 @@ body {
 
 .feature-card i {
   font-size: 2rem;
-  color: #004aad;
+  color: #1597BB;
   margin-bottom: 1rem;
 }
 
 /* How It Works */
 .how-it-works {
-  background: #f1f5ff;
+  background: #8FD6E1;
   padding: 3rem 2rem;
   text-align: center;
 }
@@ -196,7 +254,7 @@ body {
 
 .step i {
   font-size: 1.8rem;
-  color: #ff7f50;
+  color: #7B113A;
   margin-bottom: 0.5rem;
 }
 
@@ -208,7 +266,7 @@ body {
 }
 
 .testimonial {
-  background: #f8f9fa;
+  background: #8FD6E1;
   padding: 1rem;
   border-radius: 8px;
   margin: 0.5rem auto;
@@ -218,23 +276,31 @@ body {
 
 /* CTA Section */
 .cta {
-  background: #004aad;
+  background: #150E56;
   color: white;
   text-align: center;
   padding: 3rem 2rem;
 }
 
+.cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
 .cta .btn-primary {
-  background: #ff7f50;
+  background: #7B113A;
 }
 
 .cta .btn-primary:hover {
-  background: #ff5f2e;
+  background: #1597BB;
 }
 
 /* Footer */
 .footer {
-  background: #002b66;
+  background: #7B113A;
   color: white;
   text-align: center;
   padding: 1rem;
