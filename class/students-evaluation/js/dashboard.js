@@ -937,31 +937,133 @@ async function downloadPDF() {
   showLoading()
 
   try {
-    // Create PDF content that matches the preview exactly
-    const pdfContent = createPDFContent(data)
-    
-    // Configure html2pdf options for single page
-    const options = {
-      margin: 10,
-      filename: `Course_Evaluation_${data.course.replace(/\s+/g, '_')}_${new Date().toISOString().split("T")[0]}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { 
-        scale: 2,
-        useCORS: true,
-        letterRendering: true,
-        allowTaint: false
-      },
-      jsPDF: { 
-        unit: 'mm', 
-        format: 'a4', 
-        orientation: 'portrait',
-        compress: true
-      },
-      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    const { jsPDF } = window.jspdf
+    const pdf = new jsPDF("p", "mm", "a4")
+
+    // Header
+    pdf.setFontSize(14)
+    pdf.setFont(undefined, "bold")
+    pdf.text("STUDENT COURSE EVALUATION FORM", 105, 20, { align: "center" })
+
+    pdf.setFontSize(12)
+    pdf.setFont(undefined, "italic")
+    pdf.text("Ekiti State University.", 105, 28, { align: "center" })
+    const deptName = document.getElementById("department")?.value || "Department"
+    pdf.text(`Department of ${deptName}`, 105, 35, { align: "center" })
+
+    // Basic info
+    pdf.setFontSize(10)
+    pdf.setFont(undefined, "normal")
+    pdf.text("* For First and Second Semester Courses", 20, 45)
+    pdf.text(`Session: ${data.session || "........................................"}`, 120, 45)
+    pdf.text("** Read Footer Information", 20, 52)
+    pdf.text(`Date: ${data.date || ".......... / ............. / .............."}`, 120, 52)
+
+    // Draw border around header
+    pdf.rect(15, 10, 180, 50)
+
+    let yPos = 70
+
+    // Course Summary Section (compact)
+    pdf.setFont(undefined, "bold")
+    pdf.text("COURSE SUMMARY", 20, yPos)
+    yPos += 6
+    pdf.setFont(undefined, "normal")
+    const levelValue = document.getElementById("level")?.value || "________"
+    const courseValue = data.course || "Not selected"
+    pdf.rect(20, yPos, 170, 12)
+    pdf.text(`Course: ${courseValue}`, 24, yPos + 8)
+    pdf.text(`Level: ${levelValue}`, 120, yPos + 8)
+    yPos += 18
+
+    // Helper function to draw rating table
+    const drawRatingTable = (title, questions, dataPrefix, yStart) => {
+      let y = yStart
+
+      // Section header
+      pdf.setFont(undefined, "bold")
+      pdf.rect(20, y, 170, 8, "F")
+      pdf.text(title, 22, y + 5)
+      y += 8
+
+      // Rating scale header
+      pdf.setFont(undefined, "normal")
+      pdf.setFontSize(8)
+      const ratings = ["Poor", "Fair", "Satisfactory", "Good", "Excellent"]
+      pdf.rect(20, y, 100, 6)
+      for (let i = 0; i < 5; i++) {
+        pdf.rect(120 + i * 14, y, 14, 6)
+        pdf.text(ratings[i], 127 + i * 14, y + 4, { align: "center" })
+      }
+      y += 6
+
+      // Questions
+      pdf.setFontSize(8)
+      questions.forEach((question, index) => {
+        const questionHeight = 10
+        pdf.rect(20, y, 100, questionHeight)
+
+        // Split long text
+        const splitText = pdf.splitTextToSize(question, 95)
+        pdf.text(splitText, 22, y + 4)
+
+        // Rating checkboxes
+        for (let i = 1; i <= 5; i++) {
+          pdf.rect(120 + (i - 1) * 12, y, 12, questionHeight)
+          pdf.rect(124 + (i - 1) * 12, y + 3.5, 3.5, 3.5)
+
+          const selectedValue = document.querySelector(
+            `input[name="${dataPrefix}_${String.fromCharCode(97 + index)}"]:checked`,
+          )?.value
+          if (selectedValue === i.toString()) {
+            pdf.rect(125 + (i - 1) * 12, y + 4.5, 2, 2, "F")
+          }
+        }
+
+        y += questionHeight
+      })
+
+      return y
     }
 
-    // Generate and download PDF
-    await html2pdf().set(options).from(pdfContent).save()
+    // Instructor Assessment
+    const instructorQuestions = [
+      "a. The instructor was punctual and well organized for classes.",
+      "b. The instructor was well-dressed and professional in appearance.",
+      "c. The instructor demonstrated knowledge on the subject.",
+      "d. The objectives, expectations, and grading policies were clearly stated and consistently implemented.",
+    ]
+    yPos = drawRatingTable("INSTRUCTOR ASSESSMENT SECTION", instructorQuestions, "instructor", yPos)
+
+    // Course Assessment (single page target)
+
+    const courseQuestions = [
+      "a. The Course Manual provided was informative and easy to follow.",
+      "b. My thinking about the topic was refined by the course.",
+      "c. The instructor employed a variety of effective learning formats:",
+      "d. The instructor was generally responsive to students' needs.",
+    ]
+    yPos = drawRatingTable("COURSE ASSESSMENT SECTION", courseQuestions, "course", yPos)
+
+    // Omit Equipment section to keep within one page
+
+    // Compact overall rating only
+    yPos += 8
+    pdf.setFont(undefined, "bold")
+    pdf.text("Overall Rating:", 20, yPos)
+    pdf.setFontSize(12)
+    pdf.text(`${data.overallRating}%`, 60, yPos)
+
+    // Footer
+    yPos += 25
+    pdf.setFontSize(8)
+    pdf.setFont(undefined, "italic")
+    const footerText =
+      "** Course evaluations give you the opportunity to express views about a course and the way it was taught. Please answer thoroughly and honestly."
+    pdf.text(pdf.splitTextToSize(footerText, 170), 20, yPos)
+
+    // Save the PDF
+    pdf.save(`Course_Evaluation_${data.course}_${new Date().toISOString().split("T")[0]}.pdf`)
 
     hideLoading()
     alert("PDF downloaded successfully!")
@@ -970,183 +1072,6 @@ async function downloadPDF() {
     console.error("Error generating PDF:", error)
     alert("Error generating PDF. Please try again.")
   }
-}
-
-function createPDFContent(data) {
-  const container = document.createElement('div')
-  container.className = 'pdf-container pdf-compact'
-  
-  // Get current date
-  const currentDate = new Date().toLocaleDateString('en-GB')
-  const currentSession = `${new Date().getFullYear()}/${new Date().getFullYear() + 1}`
-  
-  // Get form values
-  const faculty = document.getElementById('faculty')?.value || 'Not Selected'
-  const department = document.getElementById('department')?.value || 'Not Selected'
-  const level = document.getElementById('level')?.value || 'Not Selected'
-  
-  container.innerHTML = `
-    <div class="pdf-header">
-      <h1>Student Course Evaluation Form</h1>
-      <h2>Ekiti State University</h2>
-      <div class="department">Department of ${department}</div>
-      <div class="pdf-info-row">
-        <span>* For First and Second Semester Courses</span>
-        <span>Session: ${currentSession}</span>
-      </div>
-      <div class="pdf-info-row">
-        <span>** Read Footer Information</span>
-        <span>Date: ${currentDate}</span>
-      </div>
-    </div>
-
-    <div class="pdf-section">
-      <div class="pdf-course-info">
-        <span><strong>Course:</strong> ${data.course || 'MTH 101'}</span>
-        <span><strong>Level:</strong> ${level}</span>
-        <span></span>
-      </div>
-    </div>
-
-    ${generateRatingSection('Instructor Assessment Section', [
-      'a. The instructor was punctual and well organized for classes.',
-      'b. The instructor was well-dressed and professional in appearance.',
-      'c. The instructor demonstrated knowledge on the subject.',
-      'd. The objectives, expectations, and grading policies were clearly stated and consistently implemented.'
-    ], 'instructor', data)}
-
-    ${generateRatingSection('Course Assessment Section', [
-      'a. The Course Manual provided was informative and easy to follow.',
-      'b. My thinking about the topic was refined by the course.',
-      'c. The instructor employed a variety of effective learning formats.',
-      'd. The instructor was generally responsive to students\' needs.'
-    ], 'course', data)}
-
-    ${generateRatingSection('Equipment Assessment Section (Optional)', [
-      'a. Audio-visual equipment was adequate and in good working condition.',
-      'b. The classroom/laboratory was conducive for learning.',
-      'c. Required textbooks and materials were available.',
-      'd. Online resources and platforms were accessible and functional.'
-    ], 'equipment', data)}
-
-    <div class="pdf-section">
-      <div class="pdf-section-title">Overall Course Rating</div>
-      <div class="pdf-overall-rating">
-        <h3>Overall, how would you rate this course?</h3>
-        <div class="rating-value">${data.overallRating || 0}%</div>
-      </div>
-    </div>
-
-    <div class="pdf-section pdf-comments-section">
-      <div class="pdf-section-title">Comments</div>
-      <div class="pdf-comments">
-        <div class="pdf-comments-label">Name:</div>
-        <div class="pdf-comments-content">${data.studentName || ''}</div>
-      </div>
-      <div class="pdf-comments">
-        <div class="pdf-comments-label">Phone:</div>
-        <div class="pdf-comments-content">${data.phone || ''}</div>
-      </div>
-      <div class="pdf-comments">
-        <div class="pdf-comments-label">Course Rating:</div>
-        <div class="pdf-comments-content">${data.overallRating || 0}%</div>
-      </div>
-    </div>
-
-    <div class="pdf-footer">
-      <strong>** Course evaluations give you the opportunity to express views about a course and the way it was taught. Please answer thoroughly and honestly. Your feedback is valuable for improving the quality of education at Ekiti State University.</strong>
-    </div>
-  `
-  
-  return container
-}
-
-function generateRatingSection(title, questions, prefix, data) {
-  const ratings = ['1\nPoor', '2\nFair', '3\nSatisfactory', '4\nGood', '5\nExcellent']
-  
-  let tableRows = questions.map((question, index) => {
-    const questionLetter = String.fromCharCode(97 + index) // a, b, c, d
-    const selectedValue = data[`${prefix}_${questionLetter}`] || ''
-    
-    const ratingCells = ratings.map((rating, ratingIndex) => {
-      const isChecked = selectedValue === (ratingIndex + 1).toString()
-      return `<td class="rating-col">
-        <div class="pdf-rating-checkbox ${isChecked ? 'checked' : ''}">
-          ${isChecked ? '✓' : ''}
-        </div>
-      </td>`
-    }).join('')
-    
-    return `
-      <tr>
-        <td class="question-col">${question}</td>
-        ${ratingCells}
-      </tr>
-    `
-  }).join('')
-
-  return `
-    <div class="pdf-section">
-      <div class="pdf-section-title">${title}</div>
-      <table class="pdf-rating-table">
-        <thead>
-          <tr>
-            <th class="question-col">Assessment Criteria</th>
-            <th class="rating-col">1<br>Poor</th>
-            <th class="rating-col">2<br>Fair</th>
-            <th class="rating-col">3<br>Satisfactory</th>
-            <th class="rating-col">4<br>Good</th>
-            <th class="rating-col">5<br>Excellent</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${tableRows}
-        </tbody>
-      </table>
-    </div>
-  `
-}
-
-function generateCommentsSection(data) {
-  return `
-    <div class="pdf-section">
-      <div class="pdf-section-title">Additional Comments</div>
-      <div class="pdf-comments">
-        <div class="pdf-comments-label">Instructor Comments:</div>
-        <div>${data.instructor_comments || 'No comments provided.'}</div>
-      </div>
-      <div class="pdf-comments">
-        <div class="pdf-comments-label">Course Comments:</div>
-        <div>${data.course_comments || 'No comments provided.'}</div>
-      </div>
-      <div class="pdf-comments">
-        <div class="pdf-comments-label">Equipment Comments:</div>
-        <div>${data.equipment_comments || 'No comments provided.'}</div>
-      </div>
-    </div>
-  `
-}
-
-function generateContactSection(data) {
-  return `
-    <div class="pdf-section">
-      <div class="pdf-section-title">Contact Information (Optional)</div>
-      <div class="pdf-contact-info">
-        <div class="contact-item">
-          <div class="pdf-contact-label">Name:</div>
-          <div class="pdf-contact-value">${data.studentName || ''}</div>
-        </div>
-        <div class="contact-item">
-          <div class="pdf-contact-label">Email:</div>
-          <div class="pdf-contact-value">${data.email || ''}</div>
-        </div>
-        <div class="contact-item">
-          <div class="pdf-contact-label">Phone:</div>
-          <div class="pdf-contact-value">${data.phone || ''}</div>
-        </div>
-      </div>
-    </div>
-  `
 }
 
 async function sendEmail() {
