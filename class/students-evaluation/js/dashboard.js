@@ -940,126 +940,210 @@ async function downloadPDF() {
     const { jsPDF } = window.jspdf
     const pdf = new jsPDF("p", "mm", "a4")
 
-    // Header
+    // Helper function to get checkbox value
+    const getCheckboxValue = (name) => {
+      const checked = document.querySelector(`input[name="${name}"]:checked`)
+      return checked ? checked.value : ""
+    }
+
+    // Header Section - EXACTLY like preview modal
     pdf.setFontSize(14)
     pdf.setFont(undefined, "bold")
-    pdf.text("STUDENT COURSE EVALUATION FORM", 105, 20, { align: "center" })
+    pdf.text("STUDENT COURSE EVALUATION FORM", 105, 15, { align: "center" })
 
-    pdf.setFontSize(12)
-    pdf.setFont(undefined, "italic")
-    pdf.text("Ekiti State University.", 105, 28, { align: "center" })
-    const deptName = document.getElementById("department")?.value || "Department"
-    pdf.text(`Department of ${deptName}`, 105, 35, { align: "center" })
-
-    // Basic info
     pdf.setFontSize(10)
+    pdf.setFont(undefined, "italic")
+    pdf.text("Ekiti State University.", 105, 22, { align: "center" })
+    const deptName = document.getElementById("department")?.value || "____________"
+    pdf.text(`Department of ${deptName}`, 105, 28, { align: "center" })
+
+    // Basic info section - EXACTLY like preview modal
+    pdf.setFontSize(8)
     pdf.setFont(undefined, "normal")
-    pdf.text("* For First and Second Semester Courses", 20, 45)
-    pdf.text(`Session: ${data.session || "........................................"}`, 120, 45)
-    pdf.text("** Read Footer Information", 20, 52)
-    pdf.text(`Date: ${data.date || ".......... / ............. / .............."}`, 120, 52)
+    pdf.text("* For First and Second Semester Courses", 20, 38)
+    pdf.text(`Session: ${data.session || "........................................"}`, 120, 38)
+    pdf.text("** Read Footer Information", 20, 43)
+    pdf.text(`Date: ${data.date || ".......... / ............. / .............."}`, 120, 43)
 
     // Draw border around header
-    pdf.rect(15, 10, 180, 50)
+    pdf.rect(15, 8, 180, 40)
 
-    let yPos = 70
+    let yPos = 55
 
-    // Course Summary Section (compact)
+    // Course Summary Section - EXACTLY like preview modal
+    pdf.rect(20, yPos, 170, 6)
+    pdf.setFillColor(230, 230, 230)
+    pdf.rect(20, yPos, 170, 6, "F")
+    pdf.setFillColor(255, 255, 255)
     pdf.setFont(undefined, "bold")
-    pdf.text("COURSE SUMMARY", 20, yPos)
+    pdf.setFontSize(8)
+    pdf.text("COURSE SUMMARY", 22, yPos + 4)
     yPos += 6
-    pdf.setFont(undefined, "normal")
-    const levelValue = document.getElementById("level")?.value || "________"
-    const courseValue = data.course || "Not selected"
-    pdf.rect(20, yPos, 170, 12)
-    pdf.text(`Course: ${courseValue}`, 24, yPos + 8)
-    pdf.text(`Level: ${levelValue}`, 120, yPos + 8)
-    yPos += 18
 
-    // Helper function to draw rating table
-    const drawRatingTable = (title, questions, dataPrefix, yStart) => {
+    // Course details - EXACTLY like preview modal (just Course and Level)
+    pdf.rect(20, yPos, 170, 8)
+    pdf.setFont(undefined, "normal")
+    pdf.text(`Course: ${data.course || "____________"}`, 22, yPos + 5)
+    pdf.text(`Level: ${document.getElementById("level")?.value || "____________"}`, 107, yPos + 5)
+    yPos += 12
+
+    // Helper function to draw EXACT rating table like preview modal
+    const drawExactRatingTable = (title, questions, dataPrefix, commentText, yStart) => {
       let y = yStart
 
-      // Section header
+      // Section header - EXACTLY like preview modal
+      pdf.rect(20, y, 170, 6)
+      pdf.setFillColor(230, 230, 230)
+      pdf.rect(20, y, 170, 6, "F")
+      pdf.setFillColor(255, 255, 255)
       pdf.setFont(undefined, "bold")
-      pdf.rect(20, y, 170, 8, "F")
-      pdf.text(title, 22, y + 5)
-      y += 8
-
-      // Rating scale header
-      pdf.setFont(undefined, "normal")
       pdf.setFontSize(8)
-      const ratings = ["Poor", "Fair", "Satisfactory", "Good", "Excellent"]
-      pdf.rect(20, y, 100, 6)
-      for (let i = 0; i < 5; i++) {
-        pdf.rect(120 + i * 14, y, 14, 6)
-        pdf.text(ratings[i], 127 + i * 14, y + 4, { align: "center" })
-      }
+      pdf.text(title, 22, y + 4)
       y += 6
 
-      // Questions
-      pdf.setFontSize(8)
+      // Rating scale header - EXACTLY like preview modal
+      pdf.setFont(undefined, "normal")
+      pdf.setFontSize(6)
+      pdf.rect(20, y, 102, 6)
+      pdf.rect(122, y, 13.6, 6)
+      pdf.rect(135.6, y, 13.6, 6)
+      pdf.rect(149.2, y, 13.6, 6)
+      pdf.rect(162.8, y, 13.6, 6)
+      pdf.rect(176.4, y, 13.6, 6)
+      
+      pdf.text("1 = Poor", 129, y + 4, { align: "center" })
+      pdf.text("2 = Fair", 142.6, y + 4, { align: "center" })
+      pdf.text("3 = Satisfactory", 156.2, y + 4, { align: "center" })
+      pdf.text("4 = Good", 169.8, y + 4, { align: "center" })
+      pdf.text("5 = Excellent", 183.4, y + 4, { align: "center" })
+      y += 6
+
+      // Questions - EXACTLY like preview modal
       questions.forEach((question, index) => {
-        const questionHeight = 10
-        pdf.rect(20, y, 100, questionHeight)
+        const questionHeight = 8
+        pdf.rect(20, y, 102, questionHeight)
+        
+        // Question text
+        pdf.setFontSize(6)
+        const splitText = pdf.splitTextToSize(question, 98)
+        pdf.text(splitText, 22, y + 3)
 
-        // Split long text
-        const splitText = pdf.splitTextToSize(question, 95)
-        pdf.text(splitText, 22, y + 4)
-
-        // Rating checkboxes
+        // Rating checkboxes - EXACTLY like preview modal with filled squares
         for (let i = 1; i <= 5; i++) {
-          pdf.rect(120 + (i - 1) * 12, y, 12, questionHeight)
-          pdf.rect(124 + (i - 1) * 12, y + 3.5, 3.5, 3.5)
-
-          const selectedValue = document.querySelector(
-            `input[name="${dataPrefix}_${String.fromCharCode(97 + index)}"]:checked`,
-          )?.value
+          pdf.rect(122 + (i - 1) * 13.6, y, 13.6, questionHeight)
+          
+          const selectedValue = getCheckboxValue(`${dataPrefix}_${String.fromCharCode(97 + index)}`)
           if (selectedValue === i.toString()) {
-            pdf.rect(125 + (i - 1) * 12, y + 4.5, 2, 2, "F")
+            // Draw filled square like in preview modal
+            pdf.rect(126 + (i - 1) * 13.6, y + 2.5, 3, 3, "F")
           }
         }
 
         y += questionHeight
       })
 
+      // Comments section - EXACTLY like preview modal
+      pdf.rect(20, y, 170, 12)
+      pdf.setFont(undefined, "italic")
+      pdf.setFontSize(6)
+      pdf.text(commentText, 22, y + 3)
+      
+      const commentId = dataPrefix === "instructor" ? "instructorComment" : 
+                       dataPrefix === "course" ? "courseComment" : "equipmentComment"
+      const comment = document.getElementById(commentId)?.value || ""
+      if (comment) {
+        pdf.text(pdf.splitTextToSize(comment, 165), 22, y + 7)
+      }
+      y += 12
+
       return y
     }
 
-    // Instructor Assessment
+    // Instructor Assessment Section - EXACTLY like preview modal
     const instructorQuestions = [
       "a. The instructor was punctual and well organized for classes.",
       "b. The instructor was well-dressed and professional in appearance.",
       "c. The instructor demonstrated knowledge on the subject.",
-      "d. The objectives, expectations, and grading policies were clearly stated and consistently implemented.",
+      "d. The objectives, expectations, and grading policies were clearly stated and consistently implemented."
     ]
-    yPos = drawRatingTable("INSTRUCTOR ASSESSMENT SECTION", instructorQuestions, "instructor", yPos)
+    yPos = drawExactRatingTable(
+      "INSTRUCTOR ASSESSMENT SECTION", 
+      instructorQuestions, 
+      "instructor", 
+      "In what ways did the instructor engage students as active participants in the learning process?",
+      yPos
+    )
 
-    // Course Assessment (single page target)
-
+    // Course Assessment Section - EXACTLY like preview modal
     const courseQuestions = [
       "a. The Course Manual provided was informative and easy to follow.",
       "b. My thinking about the topic was refined by the course.",
       "c. The instructor employed a variety of effective learning formats:",
-      "d. The instructor was generally responsive to students' needs.",
+      "d. The instructor was generally responsive to students' needs."
     ]
-    yPos = drawRatingTable("COURSE ASSESSMENT SECTION", courseQuestions, "course", yPos)
+    yPos = drawExactRatingTable(
+      "COURSE ASSESSMENT SECTION", 
+      courseQuestions, 
+      "course", 
+      "Comments about the Course:",
+      yPos
+    )
 
-    // Omit Equipment section to keep within one page
+    // Equipment Assessment Section - EXACTLY like preview modal
+    const equipmentQuestions = [
+      "a. There was sufficient equipment in the laboratory for individual hands-on practice.",
+      "b. The work done with laboratory equipment are relevant to the course content."
+    ]
+    yPos = drawExactRatingTable(
+      "EQUIPMENT ASSESSMENT SECTION (If applicable)", 
+      equipmentQuestions, 
+      "equipment", 
+      "Comments about the equipment:",
+      yPos
+    )
 
-    // Compact overall rating only
-    yPos += 8
+    // Optional Section - EXACTLY like preview modal
+    pdf.rect(20, yPos, 170, 6)
+    pdf.setFillColor(230, 230, 230)
+    pdf.rect(20, yPos, 170, 6, "F")
+    pdf.setFillColor(255, 255, 255)
     pdf.setFont(undefined, "bold")
-    pdf.text("Overall Rating:", 20, yPos)
-    pdf.setFontSize(12)
-    pdf.text(`${data.overallRating}%`, 60, yPos)
-
-    // Footer
-    yPos += 25
     pdf.setFontSize(8)
+    pdf.text("***OPTIONAL", 22, yPos + 4)
+    yPos += 6
+
+    pdf.rect(20, yPos, 170, 6)
     pdf.setFont(undefined, "italic")
-    const footerText =
-      "** Course evaluations give you the opportunity to express views about a course and the way it was taught. Please answer thoroughly and honestly."
+    pdf.setFontSize(6)
+    pdf.text("If you want to be contacted regarding additional courses or for more information, please feel free to include your contact information below:", 22, yPos + 4)
+    yPos += 6
+
+    // Contact info and overall rating - EXACTLY like preview modal
+    pdf.rect(20, yPos, 56.7, 12)
+    pdf.rect(76.7, yPos, 56.7, 12)
+    pdf.rect(133.3, yPos, 56.7, 12)
+    
+    pdf.setFont(undefined, "bold")
+    pdf.setFontSize(7)
+    pdf.text("E-mail:", 22, yPos + 3)
+    pdf.text("Phone:", 78.7, yPos + 3)
+    pdf.text("Overall Rating:", 135.3, yPos + 3)
+    
+    pdf.setFont(undefined, "normal")
+    pdf.setFontSize(6)
+    pdf.text(data.contact?.email || "", 22, yPos + 7)
+    pdf.text(data.contact?.phone || "", 78.7, yPos + 7)
+    pdf.setFontSize(16)
+    pdf.setFont(undefined, "bold")
+    pdf.text(`${data.overallRating}%`, 161.7, yPos + 9, { align: "center" })
+    yPos += 15
+
+    // Footer - EXACTLY like preview modal
+    pdf.setFontSize(6)
+    pdf.setFont(undefined, "italic")
+    pdf.rect(20, yPos, 170, 1)
+    yPos += 3
+    const footerText = "** Course evaluations give you the opportunity to express views about a course and the way it was taught. The faculty/departmental administration tailors such responses towards ensuring that the quality of teaching is assured, and so it is important that you answer thoroughly and honestly."
     pdf.text(pdf.splitTextToSize(footerText, 170), 20, yPos)
 
     // Save the PDF
