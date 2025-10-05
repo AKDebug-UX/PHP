@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leave of Absence Portal</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+  <!-- Landing Page -->
+  <div id="landing-page" class="page active">
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <i class="fas fa-university"></i>
+          <span>AbsenceFlow</span>
+        </div>
+        <button class="nav-toggle" id="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="#" onclick="showPage('landing-page')">Home</a></li>
+          <li><a href="#" onclick="showPage('auth-page')">Login</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Ekiti State University Leave Portal</h1>
+        <p>
+          Submit your leave of absence request swiftly and effortlessly. Stay informed about your application status and
+          take
+          charge of your academic breaks with confidence and ease. Don’t wait—make the most of your time!
+        </p>
+        <div class="hero-buttons">
+          <button class="btn btn-primary" onclick="showPage('auth-page')">
+            Get Started
+          </button>
+          <button class="btn btn-secondary" onclick="scrollToSection('about')">
+            Learn More
+          </button>
+        </div>
+      </div>
+      <div class="hero-image">
+        <i class="fas fa-user-graduate"></i>
+      </div>
+    </section>
+
+    <section id="about" class="features">
+      <div class="container">
+        <h2>Why Choose Our Portal?</h2>
+        <div class="features-grid">
+          <div class="feature-card">
+            <i class="fas fa-clock"></i>
+            <h3>Quick Application</h3>
+            <p>
+              Submit your leave application in minutes with our streamlined
+              form process.
+            </p>
+          </div>
+          <div class="feature-card">
+            <i class="fas fa-file-pdf"></i>
+            <h3>PDF Generation</h3>
+            <p>
+              Automatically generate professional PDF documents for your
+              records.
+            </p>
+          </div>
+          <div class="feature-card">
+            <i class="fas fa-share-alt"></i>
+            <h3>Easy Sharing</h3>
+            <p>
+              Share your application via email, WhatsApp, or other platforms
+              instantly.
+            </p>
+          </div>
+          <div class="feature-card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Track Status</h3>
+            <p>
+              Monitor your application status in real-time through your
+              personal dashboard.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer id="contact" class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h3>AbsenceFlow</h3>
+            <p>
+              Making academic leave applications simple and efficient for EKSU
+              students.
+            </p>
+            <div class="footer-stats">
+              <div class="footer-stat">
+                <span class="stat-number" id="footer-total-users">0</span>
+                <span class="stat-label">Active Users</span>
+              </div>
+              <div class="footer-stat">
+                <span class="stat-number" id="footer-total-applications">0</span>
+                <span class="stat-label">Applications Processed</span>
+              </div>
+              <div class="footer-stat">
+                <span class="stat-number" id="footer-success-rate">98%</span>
+                <span class="stat-label">Success Rate</span>
+              </div>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h3>Contact Info</h3>
+            <p><i class="fas fa-envelope"></i> registrar@eksu.edu.ng</p>
+            <p><i class="fas fa-phone"></i> +234-30-250249</p>
+            <p>
+              <i class="fas fa-map-marker-alt"></i> Ekiti State University,
+              Ado-Ekiti
+            </p>
+          </div>
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+              <li><a href="#" onclick="showPage('landing-page')">Home</a></li>
+              <li><a href="#features">Features</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li><a href="#" onclick="showPage('auth-page')">Login</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 AbsenceFlow. All rights reserved.</p>
+          <p class="footer-update">
+            Last updated: <span id="footer-last-update"></span>
+          </p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Authentication Page -->
+  <div id="auth-page" class="page">
+    <div class="auth-container">
+      <div class="auth-box">
+        <div class="auth-header">
+          <button class="back-btn" onclick="showPage('landing-page')">
+            <i class="fas fa-arrow-left"></i> Back to Home
+          </button>
+        </div>
+
+        <div class="auth-tabs">
+          <button class="tab-btn active" onclick="showAuthForm('login')">
+            Login
+          </button>
+          <button class="tab-btn" onclick="showAuthForm('signup')">
+            Sign Up
+          </button>
+          <button class="tab-btn" onclick="showAuthForm('reset')">
+            Reset Password
+          </button>
+        </div>
+
+        <form id="login-form" class="auth-form active">
+          <h2>Welcome Back</h2>
+          <div class="form-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="login-email" placeholder="Email Address" required />
+          </div>
+          <div class="form-group password-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="login-password" placeholder="Password" required />
+            <!-- Added password visibility toggle -->
+            <button type="button" class="password-toggle" onclick="togglePassword('login-password')">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+          <div class="auth-links">
+            <a href="#" onclick="showAuthForm('reset')">Forgot Password?</a>
+          </div>
+        </form>
+
+        <form id="signup-form" class="auth-form">
+          <h2>Create Account</h2>
+          <div class="form-group">
+            <i class="fas fa-user"></i>
+            <input type="text" id="signup-name" placeholder="Full Name" required />
+          </div>
+          <div class="form-group">
+            <i class="fas fa-id-card"></i>
+            <input type="text" id="signup-student-id" placeholder="Student ID" required />
+          </div>
+          <div class="form-group">
+            <i class="fas fa-graduation-cap"></i>
+            <input type="text" id="signup-department" placeholder="Department" required />
+          </div>
+          <div class="form-group">
+            <i class="fas fa-building"></i>
+            <input type="text" id="signup-faculty" placeholder="Faculty" required />
+          </div>
+          <div class="form-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="signup-email" placeholder="Email Address" required />
+          </div>
+          <div class="form-group">
+            <i class="fas fa-phone"></i>
+            <input type="tel" id="signup-phone" placeholder="Phone Number" required />
+          </div>
+          <div class="form-group">
+            <i class="fas fa-graduation-cap"></i>
+            <select id="signup-level" required>
+              <option value="">Select Level</option>
+              <option value="100 level">100 Level</option>
+              <option value="200 level">200 Level</option>
+              <option value="300 level">300 Level</option>
+              <option value="400 level">400 Level</option>
+              <option value="500 level">500 Level</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <i class="fas fa-home"></i>
+            <input type="text" id="signup-address" placeholder="Home Address" required />
+          </div>
+          <div class="form-group password-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="signup-password" placeholder="Password" required />
+            <!-- Added password visibility toggle -->
+            <button type="button" class="password-toggle" onclick="togglePassword('signup-password')">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+          <div class="form-group password-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="signup-confirm-password" placeholder="Confirm Password" required />
+            <!-- Added password visibility toggle -->
+            <button type="button" class="password-toggle" onclick="togglePassword('signup-confirm-password')">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Create Account
+          </button>
+        </form>
+
+        <form id="reset-form" class="auth-form">
+          <h2>Reset Password</h2>
+          <div class="form-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="reset-email" placeholder="Email Address" required />
+          </div>
+          <!-- Added OTP verification section -->
+          <div id="otp-section" class="otp-section" style="display: none">
+            <div class="form-group">
+              <i class="fas fa-key"></i>
+              <input type="text" id="otp-code" placeholder="Enter 6-digit OTP" maxlength="6" required />
+            </div>
+            <div class="form-group password-group">
+              <i class="fas fa-lock"></i>
+              <input type="password" id="new-password" placeholder="New Password" required />
+              <button type="button" class="password-toggle" onclick="togglePassword('new-password')">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            <div class="form-group password-group">
+              <i class="fas fa-lock"></i>
+              <input type="password" id="confirm-new-password" placeholder="Confirm New Password" required />
+              <button type="button" class="password-toggle" onclick="togglePassword('confirm-new-password')">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" id="reset-btn">
+            Send Reset Code
+          </button>
+          <div class="auth-links">
+            <a href="#" onclick="showAuthForm('login')">Back to Login</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Page -->
+  <div id="dashboard-page" class="page">
+    <nav class="dashboard-nav">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <!-- Fixed logo color by ensuring proper contrast -->
+          <i class="fas fa-university" style="color: var(--white)"></i>
+          <span>AbsenceFlow</span>
+        </div>
+        <!-- Added more top padding to nav-user section -->
+        <div class="nav-user" style="padding-top: 20px">
+          <span id="user-name">Welcome, User</span>
+          <button class="btn btn-secondary" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="dashboard-container">
+      <div class="dashboard-sidebar">
+        <ul class="sidebar-menu">
+          <li>
+            <a href="#" class="active" onclick="showDashboardSection('overview')">
+              <i class="fas fa-tachometer-alt"></i> Overview
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="showDashboardSection('apply')">
+              <i class="fas fa-plus-circle"></i> Apply for Leave
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="showDashboardSection('applications')">
+              <i class="fas fa-list"></i> My Applications
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="showDashboardSection('profile')">
+              <i class="fas fa-user-edit"></i> Update Profile
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="dashboard-content">
+        <!-- Overview Section -->
+        <div id="overview-section" class="dashboard-section active">
+          <h2>Dashboard Overview</h2>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <i class="fas fa-paper-plane"></i>
+              <div class="stat-info">
+                <h3 id="sent-count">0</h3>
+                <p>Applications Sent</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-clock"></i>
+              <div class="stat-info">
+                <h3 id="pending-count">0</h3>
+                <p>Pending Review</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-check-circle"></i>
+              <div class="stat-info">
+                <h3 id="approved-count">0</h3>
+                <p>Approved</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-times-circle"></i>
+              <div class="stat-info">
+                <h3 id="rejected-count">0</h3>
+                <p>Rejected</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <i class="fas fa-ban"></i>
+              <div class="stat-info">
+                <h3 id="cancelled-count">0</h3>
+                <p>Cancelled</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="recent-applications">
+            <h3>Recent Applications</h3>
+            <div id="recent-apps-list" class="applications-list">
+              <p class="no-applications">
+                No applications yet.
+                <a href="#" onclick="showDashboardSection('apply')">Apply for leave</a>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Apply Section -->
+        <div id="apply-section" class="dashboard-section">
+          <h2>Apply for Leave of Absence</h2>
+          <form id="leave-form" class="leave-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="leave-type">Type of Leave</label>
+                <select id="leave-type" required>
+                  <option value="">Select Leave Type</option>
+                  <option value="Medical Leave">Medical Leave</option>
+                  <option value="Personal Leave">Personal Leave</option>
+                  <option value="Academic Leave">Academic Leave</option>
+                  <option value="Emergency Leave">Emergency Leave</option>
+                  <option value="Family Leave">Family Leave</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="leave-duration">Duration</label>
+                <select id="leave-duration" required>
+                  <option value="">Select Duration</option>
+                  <option value="1 week">1 Week</option>
+                  <option value="2 weeks">2 Weeks</option>
+                  <option value="1 month">1 Month</option>
+                  <option value="1 semester">1 Semester</option>
+                  <option value="1 academic year">1 Academic Year</option>
+                  <option value="Other">Other (specify in reason)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="leave-session">Academic Session</label>
+                <select id="leave-session" required>
+                  <option value="">Select Session</option>
+                  <option value="2023/2024">2023/2024</option>
+                  <option value="2024/2025">2024/2025</option>
+                  <option value="2025/2026">2025/2026</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="leave-semester">Semester</label>
+                <select id="leave-semester" required>
+                  <option value="">Select Semester</option>
+                  <option value="First Semester">First Semester</option>
+                  <option value="Second Semester">Second Semester</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="start-date">Start Date</label>
+                <input type="date" id="start-date" required />
+              </div>
+              <div class="form-group">
+                <label for="end-date">Expected Return Date</label>
+                <input type="date" id="end-date" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="leave-reason">Reason for Leave</label>
+              <textarea id="leave-reason" rows="5"
+                placeholder="Please provide detailed reason for your leave of absence..." required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="emergency-contact">Emergency Contact</label>
+              <input type="text" id="emergency-contact" placeholder="Name and phone number" required />
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i> Submit Application
+              </button>
+              <button type="button" class="btn btn-secondary" onclick="previewApplication()">
+                <i class="fas fa-eye"></i> Preview
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Applications Section -->
+        <div id="applications-section" class="dashboard-section">
+          <h2>My Applications</h2>
+          <div id="applications-list" class="applications-list">
+            <p class="no-applications">No applications found.</p>
+          </div>
+        </div>
+
+        <!-- Profile Section -->
+        <div id="profile-section" class="dashboard-section">
+          <h2>Update Profile</h2>
+          <form id="profile-form" class="profile-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="profile-name">Full Name</label>
+                <input type="text" id="profile-name" required />
+              </div>
+              <div class="form-group">
+                <label for="profile-student-id">Student ID</label>
+                <input type="text" id="profile-student-id" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="profile-department">Department</label>
+                <input type="text" id="profile-department" required />
+              </div>
+              <div class="form-group">
+                <label for="profile-faculty">Faculty</label>
+                <input type="text" id="profile-faculty" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="profile-email">Email Address</label>
+                <input type="email" id="profile-email" required />
+              </div>
+              <div class="form-group">
+                <label for="profile-phone">Phone Number</label>
+                <input type="tel" id="profile-phone" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="profile-level">Level</label>
+                <select id="profile-level" required>
+                  <option value="">Select Level</option>
+                  <option value="100 level">100 Level</option>
+                  <option value="200 level">200 Level</option>
+                  <option value="300 level">300 Level</option>
+                  <option value="400 level">400 Level</option>
+                  <option value="500 level">500 Level</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="profile-address">Address</label>
+                <input type="text" id="profile-address" placeholder="Your current address" />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Update Profile
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Preview Modal -->
+  <div id="preview-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Application Preview</h3>
+        <span class="close" onclick="closeModal('preview-modal')">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div id="application-preview" class="application-document">
+          Preview content will be generated here
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="downloadPDF()">
+          <i class="fas fa-download"></i> Download PDF
+        </button>
+        <button class="btn btn-secondary" onclick="shareApplication()">
+          <i class="fas fa-share"></i> Share
+        </button>
+        <button class="btn btn-outline" onclick="closeModal('preview-modal')">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Share Modal -->
+  <div id="share-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Share Application</h3>
+        <span class="close" onclick="closeModal('share-modal')">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="share-options">
+          <button class="share-btn" onclick="shareViaEmail()">
+            <i class="fas fa-envelope"></i>
+            <span>Email</span>
+          </button>
+          <button class="share-btn" onclick="shareViaWhatsApp()">
+            <i class="fab fa-whatsapp"></i>
+            <span>WhatsApp</span>
+          </button>
+          <button class="share-btn" onclick="shareViaTelegram()">
+            <i class="fab fa-telegram"></i>
+            <span>Telegram</span>
+          </button>
+          <button class="share-btn" onclick="copyToClipboard()">
+            <i class="fas fa-copy"></i>
+            <span>Copy Link</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success/Error Messages -->
+  <div id="message-container"></div>
+
+  <!-- Added custom confirmation modal -->
+  <div id="confirmation-modal" class="modal">
+    <div class="modal-content confirmation-modal">
+      <div class="modal-header">
+        <h3 id="confirmation-title">Confirm Action</h3>
+      </div>
+      <div class="modal-body">
+        <p id="confirmation-message">Are you sure you want to proceed?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeConfirmationModal()">
+          Cancel
+        </button>
+        <button class="btn btn-danger" id="confirm-action-btn">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
